@@ -18,5 +18,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
+    camelcase: 'off',
+    'no-underscore-dangle': 'off',
   },
 };
