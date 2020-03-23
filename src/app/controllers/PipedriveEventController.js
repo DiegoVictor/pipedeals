@@ -1,12 +1,8 @@
 import * as Sentry from '@sentry/node';
 
+import slugify from 'slugify';
 import Opportunity from '../models/Opportunity';
 import Pipedrive from '../services/Pipedrive';
-import {
-  parcels_total,
-  payment_method_id,
-  supplier_name,
-} from '../../config/custom_fields_map';
 
 class PipedriveEventController {
   async store(req, res) {
@@ -45,24 +41,42 @@ class PipedriveEventController {
               0
             );
 
+            const { data: fields } = await Pipedrive.get('dealFields', {
+              params: { api_token: process.env.PIPEDRIVE_API_TOKEN },
+            });
+
+            fields.data
+              .filter(field => field.edit_flag)
+              .forEach(field => {
+                if (typeof deal.data[field.key] !== 'undefined') {
+                  let value = deal.data[field.key];
+                  if (field.field_type === 'enum') {
+                    value = field.options.find(
+                      option => option.id === parseInt(deal.data[field.key], 10)
+                    ).label;
+                  }
+                  deal.data[slugify(field.name.toLowerCase(), '_')] = value;
+                }
+              });
+
             const parcels = [];
-            for (let i = 1; i <= deal.data[parcels_total]; i += 1) {
+            for (let i = 1; i <= deal.data.parcels; i += 1) {
               parcels.push({
                 payment_term_in_days: 30 * i,
-                value: amount / deal.data[parcels_total],
+                value: amount / deal.data.parcels,
               });
             }
 
             await Opportunity.create({
               amount,
               supplier: {
-                name: deal.data[supplier_name],
+                name: deal.data.supplier,
               },
               client: {
                 pipedrive_id: id,
                 name: person_id.name,
               },
-              payment_method_id: parseInt(deal.data[payment_method_id], 10),
+              payment_method: deal.data.payment_method,
               parcels,
               items,
             });

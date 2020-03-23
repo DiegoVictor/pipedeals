@@ -35,10 +35,7 @@ describe('PipedriveEvent', () => {
           {
             formapagamento: {
               id: faker.random.number(),
-              codigoFiscal:
-                payment_methods_map[
-                  deal['4275aa493fbf4aeeefb0d918cd90df6273655368']
-                ],
+              codigoFiscal: payment_methods[deal.payment_method],
             },
           },
         ],
