@@ -75,33 +75,33 @@ describe('PipedriveEvent', () => {
     expect(body).toStrictEqual({ status: 'success' });
   });
 
-  // it('should not be able to save an opportunity', async () => {
-  //   Sentry.captureException = jest.fn();
+  it('should not be able to save an opportunity', async () => {
+    Sentry.captureException = jest.fn();
 
-  //   pipedrive_api_mock.onGet('deals').reply(400);
+    pipedrive_api_mock.onGet('deals').reply(400);
 
-  //   const { body } = await request(app)
-  //     .post('/v1/pipedrive/events')
-  //     .set(
-  //       'Authorization',
-  //       `Basic ${btoa(
-  //         `${process.env.PIPEDRIVE_USER}:${process.env.PIPEDRIVE_PWD}`
-  //       )}`
-  //     )
-  //     .expect(400)
-  //     .send({
-  //       event: 'updated.deal',
-  //       current: {
-  //         status: 'won',
-  //       },
-  //     });
+    const { body } = await request(app)
+      .post('/v1/pipedrive/events')
+      .set(
+        'Authorization',
+        `Basic ${btoa(
+          `${process.env.PIPEDRIVE_USER}:${process.env.PIPEDRIVE_PWD}`
+        )}`
+      )
+      .expect(400)
+      .send({
+        event: 'updated.deal',
+        current: {
+          status: 'won',
+        },
+      });
 
-  //   expect(Sentry.captureException).toHaveBeenCalled();
-  //   expect(body).toStrictEqual({
-  //     status: 'fail',
-  //     error: {
-  //       message: expect.any(String),
-  //     },
-  //   });
-  // });
+    expect(Sentry.captureException).toHaveBeenCalled();
+    expect(body).toStrictEqual({
+      status: 'fail',
+      error: {
+        message: expect.any(String),
+      },
+    });
+  });
 });
