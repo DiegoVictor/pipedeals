@@ -37,6 +37,7 @@
     "faker": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.5",
-    "rawurlencode": "^1.0.2"
+    "rawurlencode": "^1.0.2",
+    "slugify": "^1.4.0"
   }
 }
