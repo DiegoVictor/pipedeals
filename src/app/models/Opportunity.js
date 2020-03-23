@@ -9,7 +9,7 @@ import Report from './Report';
 
 const Client = new Schema({
   pipedrive_id: {
-    type: String,
+    type: Number,
     required: true,
   },
   name: {
@@ -72,24 +72,15 @@ const OpportunitySchema = new Schema(
   { timestamps: true }
 );
 
-OpportunitySchema.post('save', async function afterSave(opportunity) {
+export const afterSave = async opportunity => {
   try {
-    console.log('save');
-
-    const { data: payment_methods } = await Bling.get(
-      '/formaspagamento/json/',
-      {
-        params: { apikey: process.env.BLING_API_KEY },
-      }
-    );
-
+    const { data: payment_methods } = await Bling.get('/formaspagamento/json', {
+      params: { apikey: process.env.BLING_API_KEY },
+    });
     const payment_method = payment_methods.retorno.formaspagamento.find(
-      method => {
-        return (
-          method.formapagamento.codigoFiscal ===
-          String(payment_methods_map[opportunity.payment_method_id])
-        );
-      }
+      ({ formapagamento }) =>
+        formapagamento.codigoFiscal ===
+        payment_methods_map[opportunity.payment_method_id]
     );
 
     const start_of_day = startOfDay(new Date());
@@ -110,7 +101,7 @@ OpportunitySchema.post('save', async function afterSave(opportunity) {
     }
 
     await Bling.post(
-      '/pedidocompra/json/',
+      '/pedidocompra/json',
       `apikey=${process.env.BLING_API_KEY}&xml=${rawurlencode(
         `<?xml version="1.0" encoding="UTF-8"?>
         <pedidocompra>
@@ -141,10 +132,10 @@ OpportunitySchema.post('save', async function afterSave(opportunity) {
       )}`
     );
   } catch (err) {
-    console.log(err);
-
     Sentry.captureException(err);
   }
-});
+};
+
+OpportunitySchema.post('save', afterSave);
 
 export default model('Opportunity', OpportunitySchema);
