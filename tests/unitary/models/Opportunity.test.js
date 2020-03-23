@@ -8,7 +8,7 @@ import factory from '../../utils/factory';
 import { afterSave } from '../../../src/app/models/Opportunity';
 import Bling from '../../../src/app/services/Bling';
 import Report from '../../../src/app/models/Report';
-import payment_methods_map from '../../../src/config/payment_methods_map';
+import payment_methods_map from '../../../src/config/payment_methods';
 
 const bling_api_mock = new MockAdapter(Bling);
 

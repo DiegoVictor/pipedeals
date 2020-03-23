@@ -14,7 +14,7 @@ factory.define(
       faker.random.number({ min: 1, max: 3 }),
     '6866136a4bc7b12a75897df3d7ae168b46497b10': faker.company.companyName,
     '4275aa493fbf4aeeefb0d918cd90df6273655368': () =>
-      faker.random.arrayElement([12, 26, 27]),
+      faker.random.arrayElement([12, 26]),
     person_id: {
       name: faker.name.findName,
     },

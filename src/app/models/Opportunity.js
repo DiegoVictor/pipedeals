@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/node';
 import { endOfDay, startOfDay } from 'date-fns';
 
 import Bling from '../services/Bling';
-import payment_methods_map from '../../config/payment_methods_map';
+import payment_methods from '../../config/payment_methods';
 import Report from './Report';
 
 const Client = new Schema({
@@ -60,8 +60,8 @@ const OpportunitySchema = new Schema(
     },
     items: [Item],
     parcels: [Parcel],
-    payment_method_id: {
-      type: Number,
+    payment_method: {
+      type: String,
       required: true,
     },
     amount: {

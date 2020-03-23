@@ -9,7 +9,7 @@ import app from '../../../src/app';
 import factory from '../../utils/factory';
 import Pipedrive from '../../../src/app/services/Pipedrive';
 import Report from '../../../src/app/models/Report';
-import payment_methods_map from '../../../src/config/payment_methods_map';
+import payment_methods from '../../../src/config/payment_methods';
 import Bling from '../../../src/app/services/Bling';
 
 const pipedrive_api_mock = new MockAdapter(Pipedrive);
