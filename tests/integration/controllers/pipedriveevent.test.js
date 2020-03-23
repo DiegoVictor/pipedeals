@@ -46,7 +46,40 @@ describe('PipedriveEvent', () => {
       .onGet(`/deals/${deal.id}`)
       .reply(200, { data: deal })
       .onGet(`/deals/${deal.id}/products`)
-      .reply(200, { data: [product] });
+      .reply(200, { data: [product] })
+      .onGet('dealFields')
+      .reply(200, {
+        data: [
+          {
+            key: '6427f011f186d62449eb8caf53edb2a52cf959a4',
+            name: 'Parcels',
+            field_type: 'double',
+            edit_flag: true,
+          },
+          {
+            key: '4275aa493fbf4aeeefb0d918cd90df6273655368',
+            name: 'Payment Method',
+            field_type: 'enum',
+            edit_flag: true,
+            options: [
+              {
+                label: 'Boleto',
+                id: 12,
+              },
+              {
+                label: 'Dinheiro',
+                id: 26,
+              },
+            ],
+          },
+          {
+            key: '6866136a4bc7b12a75897df3d7ae168b46497b10',
+            name: 'Supplier',
+            field_type: 'varchar',
+            edit_flag: true,
+          },
+        ],
+      });
 
     bling_api_mock
       .onGet('/formaspagamento/json', {
