@@ -21,5 +21,6 @@ module.exports = {
     'class-methods-use-this': 'off',
     camelcase: 'off',
     'no-underscore-dangle': 'off',
+    'default-case': 'off',
   },
 };
