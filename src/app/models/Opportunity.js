@@ -74,16 +74,6 @@ const OpportunitySchema = new Schema(
 
 export const afterSave = async opportunity => {
   try {
-    const { data: bling_methods } = await Bling.get('/formaspagamento/json', {
-      params: { apikey: process.env.BLING_API_KEY },
-    });
-
-    const payment_method = bling_methods.retorno.formaspagamento.find(
-      ({ formapagamento }) =>
-        parseInt(formapagamento.codigoFiscal, 10) ===
-        payment_methods[opportunity.payment_method]
-    );
-
     const start_of_day = startOfDay(new Date());
     const end_of_day = endOfDay(new Date());
 
@@ -124,7 +114,9 @@ export const afterSave = async opportunity => {
                 return `<parcela>
                 <nrodias>${parcel.payment_term_in_days}</nrodias>
                 <valor>${parcel.value}</valor>
-                <idformapagamento>${payment_method.formapagamento.id}</idformapagamento>
+                <idformapagamento>${
+                  payment_methods[opportunity.payment_method]
+                }</idformapagamento>
               </parcela>`;
               })
               .join('')}
