@@ -89,9 +89,10 @@ describe('PipedriveEvent', () => {
   });
 
   it('should not be able to save an opportunity', async () => {
+    const deal = await factory.attrs('Deal');
     Sentry.captureException = jest.fn();
 
-    pipedrive_api_mock.onGet('deals').reply(400);
+    pipedrive_api_mock.onGet(`/deals/${deal.id}`).reply(400);
 
     const { body } = await request(app)
       .post('/v1/pipedrive/events')
@@ -105,6 +106,7 @@ describe('PipedriveEvent', () => {
       .send({
         event: 'updated.deal',
         current: {
+          id: deal.id,
           status: 'won',
         },
       });
