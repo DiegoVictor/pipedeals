@@ -3,13 +3,11 @@ import request from 'supertest';
 import Mongoose from 'mongoose';
 import MockAdapter from 'axios-mock-adapter';
 import btoa from 'btoa';
-import faker from 'faker';
 
 import app from '../../../src/app';
 import factory from '../../utils/factory';
 import Pipedrive from '../../../src/app/services/Pipedrive';
 import Report from '../../../src/app/models/Report';
-import payment_methods from '../../../src/config/payment_methods';
 import Bling from '../../../src/app/services/Bling';
 
 const pipedrive_api_mock = new MockAdapter(Pipedrive);
@@ -29,18 +27,6 @@ describe('PipedriveEvent', () => {
   it('should be able to save an opportunity', async () => {
     const product = await factory.attrs('Product');
     const deal = await factory.attrs('Deal');
-    const payment = {
-      retorno: {
-        formaspagamento: [
-          {
-            formapagamento: {
-              id: faker.random.number(),
-              codigoFiscal: payment_methods[deal.payment_method],
-            },
-          },
-        ],
-      },
-    };
 
     pipedrive_api_mock
       .onGet(`/deals/${deal.id}`)
@@ -81,13 +67,7 @@ describe('PipedriveEvent', () => {
         ],
       });
 
-    bling_api_mock
-      .onGet('/formaspagamento/json', {
-        params: { apikey: process.env.BLING_API_KEY },
-      })
-      .reply(200, payment)
-      .onPost('/pedidocompra/json')
-      .reply(200);
+    bling_api_mock.onPost('/pedidocompra/json').reply(200);
 
     const { body } = await request(app)
       .post('/v1/pipedrive/events')

@@ -1,14 +1,12 @@
 import 'dotenv/config';
 import MockAdapter from 'axios-mock-adapter';
 import Mongoose from 'mongoose';
-import faker from 'faker';
 
 import { startOfDay, endOfDay } from 'date-fns';
 import factory from '../../utils/factory';
 import { afterSave } from '../../../src/app/models/Opportunity';
 import Bling from '../../../src/app/services/Bling';
 import Report from '../../../src/app/models/Report';
-import payment_methods_map from '../../../src/config/payment_methods';
 
 const bling_api_mock = new MockAdapter(Bling);
 
@@ -30,29 +28,11 @@ describe('Opportunity model', () => {
   });
 
   it('should be able to send a new opportunity to bling', async () => {
-    const payment = await factory.attrs('Payment', {
-      retorno: {
-        formaspagamento: [
-          {
-            formapagamento: {
-              id: faker.random.number(),
-              codigoFiscal: payment_methods_map[12],
-            },
-          },
-        ],
-      },
-    });
     const opportunity = await factory.attrs('Opportunity', {
       payment_method_id: 12,
     });
 
-    bling_api_mock
-      .onGet('/formaspagamento/json', {
-        params: { apikey: process.env.BLING_API_KEY },
-      })
-      .reply(200, payment)
-      .onPost('/pedidocompra/json')
-      .reply(200);
+    bling_api_mock.onPost('/pedidocompra/json').reply(200);
 
     await afterSave(opportunity);
 
@@ -68,20 +48,8 @@ describe('Opportunity model', () => {
   });
 
   it('should be able to send a opportunity to bling and update the day report', async () => {
-    const payment = await factory.attrs('Payment', {
-      retorno: {
-        formaspagamento: [
-          {
-            formapagamento: {
-              id: faker.random.number(),
-              codigoFiscal: payment_methods_map[12],
-            },
-          },
-        ],
-      },
-    });
     const opportunity = await factory.attrs('Opportunity', {
-      payment_method_id: 12,
+      payment_method: 'Boleto',
     });
 
     let report = await factory.create('Report', {
@@ -89,13 +57,7 @@ describe('Opportunity model', () => {
       amount: 0,
     });
 
-    bling_api_mock
-      .onGet('/formaspagamento/json', {
-        params: { apikey: process.env.BLING_API_KEY },
-      })
-      .reply(200, payment)
-      .onPost('/pedidocompra/json')
-      .reply(200);
+    bling_api_mock.onPost('/pedidocompra/json').reply(200);
 
     await afterSave(opportunity);
 
