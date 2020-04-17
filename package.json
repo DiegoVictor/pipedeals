@@ -8,6 +8,22 @@
     "start": "nodemon src/server.js",
     "test": "jest --runInBand"
   },
+  "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "atob": "^2.1.2",
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "btoa": "^1.2.1",
+    "celebrate": "^12.1.0",
+    "date-fns": "^2.11.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.5",
+    "rawurlencode": "^1.0.2",
+    "slugify": "^1.4.0"
+  },
   "devDependencies": {
     "@sucrase/jest-plugin": "^2.0.0",
     "@types/jest": "^25.1.4",
@@ -24,21 +40,5 @@
     "prettier": "^1.19.1",
     "sucrase": "^3.12.1",
     "supertest": "^4.0.2"
-  },
-  "dependencies": {
-    "@sentry/node": "5.14.2",
-    "atob": "^2.1.2",
-    "axios": "^0.19.2",
-    "bcryptjs": "^2.4.3",
-    "btoa": "^1.2.1",
-    "date-fns": "^2.11.0",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "factory-girl": "^5.0.4",
-    "faker": "^4.1.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.5",
-    "rawurlencode": "^1.0.2",
-    "slugify": "^1.4.0"
   }
 }
