@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import Express from 'express';
 import Mongoose from 'mongoose';
-import * as Sentry from '@sentry/node';
+import cors from 'cors';
+import helmet from 'helmet';
 
 import routes from './routes';
 
@@ -12,6 +13,9 @@ Mongoose.connect(process.env.MONGO_URL, {
 });
 
 const App = Express();
+
+App.use(helmet());
+App.use(cors());
 App.use(Express.json());
 
 App.use('/v1/', routes);
