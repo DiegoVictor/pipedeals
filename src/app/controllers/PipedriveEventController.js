@@ -1,6 +1,5 @@
-import * as Sentry from '@sentry/node';
-
 import slugify from 'slugify';
+
 import Opportunity from '../models/Opportunity';
 import Pipedrive from '../services/Pipedrive';
 
@@ -11,7 +10,6 @@ class PipedriveEventController {
     switch (event) {
       case 'updated.deal': {
         if (current && current.status === 'won') {
-          try {
             const { data: deal } = await Pipedrive.get(`/deals/${current.id}`, {
               params: {
                 api_token: process.env.PIPEDRIVE_API_TOKEN,
@@ -80,15 +78,6 @@ class PipedriveEventController {
               parcels,
               items,
             });
-          } catch (err) {
-            Sentry.captureException(err);
-            return res.status(400).json({
-              status: 'fail',
-              error: {
-                message: err.message,
-              },
-            });
-          }
         }
         break;
       }

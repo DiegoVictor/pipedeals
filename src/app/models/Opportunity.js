@@ -1,6 +1,5 @@
 import { model, Schema } from 'mongoose';
 import rawurlencode from 'rawurlencode';
-import * as Sentry from '@sentry/node';
 import { endOfDay, startOfDay } from 'date-fns';
 
 import Bling from '../services/Bling';
@@ -124,9 +123,7 @@ export const afterSave = async opportunity => {
         </pedidocompra>`
       )}`
     );
-  } catch (err) {
-    Sentry.captureException(err);
-  }
+  } catch (err) {}
 };
 
 OpportunitySchema.post('save', afterSave);
