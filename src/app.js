@@ -3,6 +3,7 @@ import Express from 'express';
 import Mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
+import { errors } from 'celebrate';
 
 import routes from './routes';
 
@@ -20,9 +21,7 @@ App.use(Express.json());
 
 App.use('/v1/', routes);
 
-if (process.env.SENTRY_DSN) {
-  Sentry.init({ dsn: process.env.SENTRY_DSN });
-  App.use(Sentry.Handlers.requestHandler());
+App.use(errors());
 }
 
 export default App;
