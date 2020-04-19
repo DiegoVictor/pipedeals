@@ -1,5 +1,6 @@
 import Opportunity from '../models/Opportunity';
 import Report from '../models/Report';
+import PaginationLinks from '../services/PaginationLinks';
 
 const projection = {
   report_id: false,
@@ -14,6 +15,7 @@ const projection = {
 
 class ReportOpportunitiesController {
   async index(req, res) {
+    const { resource_url } = req;
     const { report_id } = req.params;
     const { page = 1 } = req.query;
     const limit = 10;
@@ -26,6 +28,18 @@ class ReportOpportunitiesController {
 
     const count = await Opportunity.where({ report_id }).countDocuments();
     res.header('X-Total-Count', count);
+
+    if (count > limit) {
+      const links = PaginationLinks.run({
+        resource_url,
+        page,
+        pages_total: Math.ceil(count / limit),
+      });
+      if (Object.keys(links).length > 0) {
+        res.links(links);
+      }
+    }
+
     return res.json(
       opportunities.map(opportunity => ({
         ...opportunity,

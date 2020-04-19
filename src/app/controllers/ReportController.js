@@ -1,4 +1,5 @@
 import Report from '../models/Report';
+import PaginationLinks from '../services/PaginationLinks';
 
 class ReportController {
   async index(req, res) {
@@ -14,6 +15,17 @@ class ReportController {
 
     const count = await Report.countDocuments();
     res.header('X-Total-Count', count);
+
+    if (count > limit) {
+      const links = PaginationLinks.run({
+        resource_url,
+        page,
+        pages_total: Math.ceil(count / limit),
+      });
+      if (Object.keys(links).length > 0) {
+        res.links(links);
+      }
+    }
 
     return res.json(
       reports.map(report => ({
