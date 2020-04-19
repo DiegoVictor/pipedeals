@@ -8,6 +8,9 @@ import ReportOppotunitiesController from './app/controllers/ReportOppotunitiesCo
 
 import PipedriveStore from './app/validators/Pipedrive/Store';
 import ReportGet from './app/validators/Report/Get';
+import ReportShow from './app/validators/Report/Show';
+import ReportOpportunityGet from './app/validators/ReportOpportunity/Get';
+import ReportOpportunityShow from './app/validators/ReportOpportunity/Show';
 import SessionStore from './app/validators/Session/Store';
 import UserStore from './app/validators/User/Store';
 
@@ -28,15 +31,17 @@ Route.post(
 Route.use(Auth);
 
 Route.get('/reports', ReportGet, ReportController.index);
-Route.get('/reports/:id', ReportController.show);
+Route.get('/reports/:id', ReportShow, ReportController.show);
 
 Route.get(
   '/reports/:report_id/opportunities',
+  ReportOpportunityGet,
   ReportOppotunitiesController.index
 );
 
 Route.get(
   '/reports/:report_id/opportunities/:id',
+  ReportOpportunityShow,
   ReportOppotunitiesController.show
 );
 
