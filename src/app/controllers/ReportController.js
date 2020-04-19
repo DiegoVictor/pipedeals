@@ -4,13 +4,16 @@ class ReportController {
   async index(req, res) {
     const { resource_url } = req;
     const { page = 1 } = req.query;
-    const limit = 30;
+    const limit = 10;
 
-    const reports = await Report.find()
+    const reports = await Report.find(null, { amount: true, date: true })
       .lean()
       .sort('-date')
       .skip((page - 1) * limit)
       .limit(limit);
+
+    const count = await Report.countDocuments();
+    res.header('X-Total-Count', count);
 
     return res.json(
       reports.map(report => ({
