@@ -4,6 +4,7 @@ import ReportController from './app/controllers/ReportController';
 import PipedriveEventController from './app/controllers/PipedriveEventController';
 import SessionController from './app/controllers/SessionController';
 import UserController from './app/controllers/UserController';
+import ReportOppotunitiesController from './app/controllers/ReportOppotunitiesController';
 
 import PipedriveStore from './app/validators/Pipedrive/Store';
 import ReportGet from './app/validators/Report/Get';
@@ -27,5 +28,16 @@ Route.post(
 Route.use(Auth);
 
 Route.get('/reports', ReportGet, ReportController.index);
+Route.get('/reports/:id', ReportController.show);
+
+Route.get(
+  '/reports/:report_id/opportunities',
+  ReportOppotunitiesController.index
+);
+
+Route.get(
+  '/reports/:report_id/opportunities/:id',
+  ReportOppotunitiesController.show
+);
 
 export default Route;
