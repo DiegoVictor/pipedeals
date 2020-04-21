@@ -9,7 +9,7 @@ import { isBoom } from '@hapi/boom';
 import { errors } from 'celebrate';
 
 import routes from './routes';
-import ResourceRoute from './app/middlewares/ResourceRoute';
+import RouteAliases from './app/middlewares/RouteAliases';
 
 Mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
@@ -22,7 +22,7 @@ const App = Express();
 App.use(helmet());
 App.use(cors());
 App.use(Express.json());
-App.use(ResourceRoute);
+App.use(RouteAliases);
 
 App.use('/v1/', routes);
 
