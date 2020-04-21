@@ -15,10 +15,12 @@ import SessionStore from './app/validators/Session/Store';
 import UserStore from './app/validators/User/Store';
 
 import PipedriveAuth from './app/middlewares/PipedriveAuth';
+import RateLimit from './app/middlewares/RateLimit';
 
 const Route = Router();
 
-Route.post('/sessions', SessionStore, SessionController.store);
+Route.use(RateLimit);
+
 Route.post('/users', UserStore, UserController.store);
 
 Route.post(
