@@ -1,14 +1,11 @@
 import atob from 'atob';
+import { badRequest, unauthorized } from '@hapi/boom';
 
-export default (req, res, next) => {
+export default (req, _, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(400).json({
-      error: {
-        message: 'Missing authorization',
-      },
-    });
+    throw badRequest('Missing authorization', { code: 640 });
   }
 
   const [user, pass] = atob(authorization.split(' ').pop()).split(':');
@@ -17,11 +14,7 @@ export default (req, res, next) => {
     user !== process.env.PIPEDRIVE_USER ||
     pass !== process.env.PIPEDRIVE_PWD
   ) {
-    return res.status(401).json({
-      error: {
-        message: 'You are not authorized!',
-      },
-    });
+    throw unauthorized('You are not authorized!', { code: 641 });
   }
 
   return next();

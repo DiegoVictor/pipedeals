@@ -1,29 +1,21 @@
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
+import { badRequest, unauthorized } from '@hapi/boom';
 
 export default async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(400).json({
-      error: {
-        message: 'Missing authorization token',
-      },
-    });
+    throw badRequest('Missing authorization token', { code: 540 });
   }
-
-  const [, token] = authorization.split(' ');
 
   try {
+    const [, token] = authorization.split(' ');
     const { id } = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
     req.user_id = id;
-  } catch (err) {
-    return res.status(401).json({
-      error: {
-        message: 'Token expired or invalid',
-      },
-    });
-  }
 
-  return next();
+    return next();
+  } catch (err) {
+    throw unauthorized('Token expired or invalid', { code: 541 });
+  }
 };

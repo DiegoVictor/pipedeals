@@ -1,19 +1,16 @@
+import { badRequest } from '@hapi/boom';
+
 import User from '../models/User';
 
 class UserController {
   async store(req, res) {
     const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-    let user = await User.findOne({ email });
     if (user) {
-      return res.status(401).json({
-        error: {
-          message: 'Email already in use',
-        },
-      });
+      throw badRequest('Email already in use', { code: 440 });
     }
-
-    user = await User.create({ email, password });
+    await User.create({ email, password });
 
     return res.json({ email });
   }

@@ -1,3 +1,5 @@
+import { badRequest, notFound } from '@hapi/boom';
+
 import Opportunity from '../models/Opportunity';
 import Report from '../models/Report';
 import PaginationLinks from '../services/PaginationLinks';
@@ -21,6 +23,10 @@ class ReportOpportunitiesController {
     const limit = 10;
 
     const report = await Report.findById(report_id);
+    if (!report) {
+      throw badRequest('Report not found', { code: 240 });
+    }
+
     const opportunities = await Opportunity.find({ report_id }, projection)
       .lean()
       .skip((page - 1) * limit)

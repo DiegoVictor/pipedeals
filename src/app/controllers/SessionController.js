@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
+import { badRequest, notFound } from '@hapi/boom';
 
 import User from '../models/User';
 
@@ -9,19 +10,11 @@ class SessionController {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({
-        error: {
-          message: 'User not exists',
-        },
-      });
+      throw notFound('User not exists', { code: 344 });
     }
 
     if (!(await bcryptjs.compare(password, user.password))) {
-      return res.status(400).json({
-        error: {
-          message: 'User and/or password not match',
-        },
-      });
+      throw badRequest('User and/or password not match', { code: 340 });
     }
 
     return res.json({
