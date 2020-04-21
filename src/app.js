@@ -15,6 +15,7 @@ Mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 const App = Express();
@@ -36,7 +37,7 @@ App.use((err, _, res, next) => {
       ...err.data,
       docs: process.env.DOCS_URL,
     });
-}
+  }
 
   return next(err);
 });

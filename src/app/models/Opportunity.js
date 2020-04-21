@@ -1,9 +1,7 @@
 import { model, Schema } from 'mongoose';
-import rawurlencode from 'rawurlencode';
 import { endOfDay, startOfDay } from 'date-fns';
 
-import Bling from '../services/Bling';
-import payment_methods from '../../config/payment_methods';
+import CreateBlingBuyOrder from '../services/CreateBlingBuyOrder';
 import Report from './Report';
 
 const Client = new Schema({
@@ -75,61 +73,34 @@ const OpportunitySchema = new Schema(
   { timestamps: true }
 );
 
-export const afterSave = async opportunity => {
-  try {
-    const start_of_day = startOfDay(new Date());
-    const end_of_day = endOfDay(new Date());
+export async function beforeSave(opportunity) {
+  const report = await Report.findOne({
+    date: { $gte: startOfDay(new Date()), $lte: endOfDay(new Date()) },
+  });
 
-    const report = await Report.findOne({
-      date: { $gte: start_of_day, $lte: end_of_day },
-    });
-
-    if (report) {
-      report.amount += opportunity.amount;
-      await report.save();
-    } else {
-      await Report.create({
+  if (!report) {
+    this.set({
+      report_id: await Report.create({
         date: new Date(),
         amount: opportunity.amount,
-      });
-    }
+      }),
+    });
+  } else {
+    this.set({ report_id: report._id });
+  }
 
-    await Bling.post(
-      '/pedidocompra/json',
-      `apikey=${process.env.BLING_API_KEY}&xml=${rawurlencode(
-        `<?xml version="1.0" encoding="UTF-8"?>
-        <pedidocompra>
-          <fornecedor>
-            <nome>${opportunity.supplier.name}</nome>
-          </fornecedor>
-          <itens>
-          ${opportunity.items.map(item => {
-            return `<item>
-              <descricao>${item.description}</descricao>
-              <qtde>${item.quantity}</qtde>
-              <valor>${item.unitary_value}</valor>
-            </item>`;
-          })}
-          </itens>
-          <parcelas>
-            ${opportunity.parcels
-              .map(parcel => {
-                return `<parcela>
-                <nrodias>${parcel.payment_term_in_days}</nrodias>
-                <valor>${parcel.value}</valor>
-                <idformapagamento>${
-                  payment_methods[opportunity.payment_method]
-                }</idformapagamento>
-              </parcela>`;
-              })
-              .join('')}
-          </parcelas>
-        </pedidocompra>`
-      )}`
-    );
-  } catch (err) {}
-};
+  return opportunity;
+}
 
+export async function afterSave(opportunity) {
+  await Report.findByIdAndUpdate(opportunity.report_id, {
+    $inc: { amount: opportunity.amount },
+  });
+
+  await CreateBlingBuyOrder.run({ opportunity });
+}
+
+OpportunitySchema.pre('save', beforeSave);
 OpportunitySchema.post('save', afterSave);
 
 export default model('Opportunity', OpportunitySchema);
