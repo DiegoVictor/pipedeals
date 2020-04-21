@@ -3,6 +3,7 @@ import { badRequest, notFound } from '@hapi/boom';
 import Opportunity from '../models/Opportunity';
 import Report from '../models/Report';
 import PaginationLinks from '../services/PaginationLinks';
+import hateoas from '../helpers/hateoas';
 
 const projection = {
   report_id: false,
@@ -17,7 +18,7 @@ const projection = {
 
 class ReportOpportunitiesController {
   async index(req, res) {
-    const { resource_url } = req;
+    const { base_url, resource_url } = req;
     const { report_id } = req.params;
     const { page = 1 } = req.query;
     const limit = 10;
@@ -39,22 +40,46 @@ class ReportOpportunitiesController {
     if (pages_total > 1) {
       res.links(
         PaginationLinks.run({
-        resource_url,
-        page,
+          resource_url,
+          page,
           pages_total,
         })
       );
     }
-      }
-    }
 
     return res.json(
-      opportunities.map(opportunity => ({
-        ...opportunity,
-      }))
+      hateoas(opportunities, {
+        url: `${resource_url}/:id`,
+        report: {
+          _id: report_id,
+          url: `${base_url}/v1/reports/${report_id}`,
+        },
+      })
     );
   }
 
+  async show(req, res) {
+    const { base_url, resource_url } = req;
+    const { report_id, id } = req.params;
+
+    const opportunity = await Opportunity.findOne(
+      { _id: id, report_id },
+      projection
+    ).lean();
+    if (!opportunity) {
+      throw notFound('Opportunity not fount', { code: 344 });
+    }
+
+    return res.json(
+      hateoas(opportunity, {
+        url: resource_url,
+        report: {
+          _id: report_id,
+          url: `${base_url}/v1/reports/${report_id}`,
+        },
+      })
+    );
+  }
 }
 
 export default new ReportOpportunitiesController();
