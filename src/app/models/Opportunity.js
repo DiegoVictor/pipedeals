@@ -52,6 +52,10 @@ const Parcel = new Schema({
 
 const OpportunitySchema = new Schema(
   {
+    report_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Report',
+    },
     client: Client,
     supplier: {
       type: Supplier,
