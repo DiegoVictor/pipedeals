@@ -17,7 +17,17 @@ import UserStore from './app/validators/User/Store';
 import PipedriveAuth from './app/middlewares/PipedriveAuth';
 import RateLimit from './app/middlewares/RateLimit';
 
+import { BruteForce } from './database/redis';
+import bruteforce_config from './config/bruteforce';
+
 const Route = Router();
+
+Route.post(
+  '/sessions',
+  new BruteForce(bruteforce_config).prevent,
+  SessionStore,
+  SessionController.store
+);
 
 Route.use(RateLimit);
 
