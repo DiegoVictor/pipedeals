@@ -14,6 +14,7 @@ import ReportOpportunityShow from './app/validators/ReportOpportunity/Show';
 import SessionStore from './app/validators/Session/Store';
 import UserStore from './app/validators/User/Store';
 
+import AuthToken from './app/middlewares/AuthToken';
 import PipedriveAuth from './app/middlewares/PipedriveAuth';
 import RateLimit from './app/middlewares/RateLimit';
 
@@ -40,7 +41,7 @@ Route.post(
   PipedriveEventController.store
 );
 
-Route.use(Auth);
+Route.use(AuthToken);
 
 Route.get('/reports', ReportGet, ReportController.index);
 Route.get('/reports/:id', ReportShow, ReportController.show);
