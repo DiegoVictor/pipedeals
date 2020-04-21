@@ -35,14 +35,16 @@ class ReportOpportunitiesController {
     const count = await Opportunity.where({ report_id }).countDocuments();
     res.header('X-Total-Count', count);
 
-    if (count > limit) {
-      const links = PaginationLinks.run({
+    const pages_total = Math.ceil(count / limit);
+    if (pages_total > 1) {
+      res.links(
+        PaginationLinks.run({
         resource_url,
         page,
-        pages_total: Math.ceil(count / limit),
-      });
-      if (Object.keys(links).length > 0) {
-        res.links(links);
+          pages_total,
+        })
+      );
+    }
       }
     }
 
