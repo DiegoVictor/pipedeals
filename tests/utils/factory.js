@@ -13,8 +13,7 @@ factory.define(
     '6427f011f186d62449eb8caf53edb2a52cf959a4': () =>
       faker.random.number({ min: 1, max: 3 }),
     '6866136a4bc7b12a75897df3d7ae168b46497b10': faker.company.companyName,
-    '4275aa493fbf4aeeefb0d918cd90df6273655368': () =>
-      faker.random.arrayElement([12, 26]),
+    '4275aa493fbf4aeeefb0d918cd90df6273655368': faker.random.word,
     person_id: {
       name: faker.name.findName,
     },
@@ -73,20 +72,14 @@ factory.define('Opportunity', Opportunity, () => {
         value: faker.finance.amount,
       },
     ],
-    payment_method_id: () => faker.random.arrayElement([12, 26, 27]),
+    payment_method: faker.random.word,
     amount: quantity * unitary_value,
   };
 });
 
 factory.define('Report', Report, {
-  date: () => {
-    const future = faker.random.boolean();
-    if (future) {
-      return faker.date.future();
-    }
-    return faker.date.past();
-  },
-  amount: faker.finance.amount,
+  date: faker.date.future,
+  amount: 0,
 });
 
 factory.define('User', User, {
