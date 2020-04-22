@@ -17,7 +17,10 @@ export function RateLimiter(opts) {
 
 export function BruteForce(opts) {
   if (process.env.NODE_ENV === 'test') {
-    return new ExpressBruteFlexible(ExpressBruteFlexible.S.MEMORY, opts);
+    return new ExpressBruteFlexible(
+      ExpressBruteFlexible.LIMITER_TYPES.MEMORY,
+      opts
+    );
   }
 
   return new ExpressBruteFlexible(ExpressBruteFlexible.LIMITER_TYPES.REDIS, {
