@@ -30,6 +30,7 @@ class ReportOpportunitiesController {
 
     const opportunities = await Opportunity.find({ report_id }, projection)
       .lean()
+      .sort('createdAt')
       .skip((page - 1) * limit)
       .limit(limit);
 
