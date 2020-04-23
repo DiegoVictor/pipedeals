@@ -6,7 +6,7 @@ import SessionController from './app/controllers/SessionController';
 import UserController from './app/controllers/UserController';
 import ReportOppotunitiesController from './app/controllers/ReportOppotunitiesController';
 
-import PipedriveStore from './app/validators/Pipedrive/Store';
+import PipedriveEventStore from './app/validators/PipedriveEvent/Store';
 import ReportGet from './app/validators/Report/Get';
 import ReportShow from './app/validators/Report/Show';
 import ReportOpportunityGet from './app/validators/ReportOpportunity/Get';
@@ -37,7 +37,7 @@ Route.post('/users', UserStore, UserController.store);
 Route.post(
   '/pipedrive/events',
   PipedriveAuth,
-  PipedriveStore,
+  PipedriveEventStore,
   PipedriveEventController.store
 );
 
@@ -51,7 +51,6 @@ Route.get(
   ReportOpportunityGet,
   ReportOppotunitiesController.index
 );
-
 Route.get(
   '/reports/:report_id/opportunities/:id',
   ReportOpportunityShow,
