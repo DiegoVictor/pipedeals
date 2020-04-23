@@ -45,6 +45,7 @@
     "mongodb-memory-server": "^6.4.1",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
+    "redis-mock": "^0.49.0",
     "sucrase": "^3.12.1",
     "supertest": "^4.0.2"
   }
