@@ -67,7 +67,7 @@ class ReportOpportunitiesController {
       projection
     ).lean();
     if (!opportunity) {
-      throw notFound('Opportunity not fount', { code: 344 });
+      throw notFound('Opportunity not found', { code: 344 });
     }
 
     return res.json(
