@@ -1,4 +1,4 @@
 export default {
-  freeRetries: 2,
+  freeRetries: 3,
   prefix: 'bruteforce_',
 };
