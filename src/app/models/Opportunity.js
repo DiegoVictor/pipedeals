@@ -1,7 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { endOfDay, startOfDay } from 'date-fns';
 
-import CreateBlingBuyOrder from '../services/CreateBlingBuyOrder';
 import Report from './Report';
 
 const Client = new Schema({
@@ -73,7 +72,7 @@ const OpportunitySchema = new Schema(
   { timestamps: true }
 );
 
-export async function beforeSave(opportunity) {
+export async function beforeSave(next) {
   const report = await Report.findOne({
     date: { $gte: startOfDay(new Date()), $lte: endOfDay(new Date()) },
   });
@@ -82,25 +81,18 @@ export async function beforeSave(opportunity) {
     this.set({
       report_id: await Report.create({
         date: new Date(),
-        amount: opportunity.amount,
+        amount: this.amount,
       }),
     });
   } else {
     this.set({ report_id: report._id });
+
+    report.amount += this.amount;
+    await report.save();
   }
-
-  return opportunity;
-}
-
-export async function afterSave(opportunity) {
-  await Report.findByIdAndUpdate(opportunity.report_id, {
-    $inc: { amount: opportunity.amount },
-  });
-
-  await CreateBlingBuyOrder.run({ opportunity });
+  next();
 }
 
 OpportunitySchema.pre('save', beforeSave);
-OpportunitySchema.post('save', afterSave);
 
 export default model('Opportunity', OpportunitySchema);

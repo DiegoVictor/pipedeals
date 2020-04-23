@@ -3,6 +3,7 @@ import GetDeal from '../services/GetDeal';
 import GetDealProducts from '../services/GetDealProducts';
 import UpdateDealFieldsName from '../services/UpdateDealFieldsName';
 import CalculateParcels from '../services/CalculateParcels';
+import CreateBlingBuyOrder from '../services/CreateBlingBuyOrder';
 
 class PipedriveEventController {
   async store(req, res) {
@@ -10,7 +11,7 @@ class PipedriveEventController {
 
     switch (event) {
       case 'updated.deal': {
-        if (current && current.status === 'won') {
+        if (current.status === 'won') {
           const deal = await UpdateDealFieldsName.run({
             data: await GetDeal.run({ id: current.id }),
           });
@@ -20,21 +21,23 @@ class PipedriveEventController {
             0
           );
 
-          await Opportunity.create({
-            amount,
-            supplier: {
-              name: deal.supplier,
-            },
-            client: {
-              pipedrive_id: deal.id,
-              name: deal.person_id.name,
-            },
-            payment_method: deal.payment_method,
-            parcels: CalculateParcels.run({
+          await CreateBlingBuyOrder.run({
+            opportunity: await Opportunity.create({
               amount,
-              parcels_count: deal.parcels,
+              supplier: {
+                name: deal.supplier,
+              },
+              client: {
+                pipedrive_id: deal.id,
+                name: deal.person_id.name,
+              },
+              payment_method: deal.payment_method,
+              parcels: CalculateParcels.run({
+                amount,
+                parcels_count: deal.parcels,
+              }),
+              items,
             }),
-            items,
           });
         }
         break;
