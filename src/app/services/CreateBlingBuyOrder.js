@@ -1,16 +1,17 @@
-import axios from 'axios';
 import rawurlencode from 'rawurlencode';
 import { serverUnavailable } from '@hapi/boom';
+
+import Bling from './Bling';
 
 class CreateBlingBuyOrder {
   async run({ opportunity }) {
     try {
-      const api = axios.create({
-        baseURL: 'https://bling.com.br/Api/v2',
-      });
-      const { data: payment_methods } = await api.get('/formaspagamento/json', {
-        params: { apikey: process.env.BLING_API_KEY },
-      });
+      const { data: payment_methods } = await Bling.get(
+        '/formaspagamento/json',
+        {
+          params: { apikey: process.env.BLING_API_KEY },
+        }
+      );
 
       let payment_method;
       payment_methods.retorno.formaspagamento.every(
@@ -27,7 +28,7 @@ class CreateBlingBuyOrder {
       );
 
       if (!payment_method) {
-        const { data } = await api.post(
+        const { data } = await Bling.post(
           '/formapagamento/json',
           `apikey=${process.env.BLING_API_KEY}&xml=${rawurlencode(
             `<?xml version="1.0" encoding="UTF-8"?>
@@ -40,7 +41,7 @@ class CreateBlingBuyOrder {
         payment_method = data.retorno.formaspagamento.pop().id;
       }
 
-      await api.post(
+      await Bling.post(
         '/pedidocompra/json',
         `apikey=${process.env.BLING_API_KEY}&xml=${rawurlencode(
           `<?xml version="1.0" encoding="UTF-8"?>
