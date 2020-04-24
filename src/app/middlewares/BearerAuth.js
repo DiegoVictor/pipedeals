@@ -16,6 +16,6 @@ export default async (req, _, next) => {
 
     return next();
   } catch (err) {
-    throw unauthorized('Token expired or invalid', { code: 541 });
+    throw unauthorized('Token expired or invalid', 'sample', { code: 541 });
   }
 };

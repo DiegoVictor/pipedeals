@@ -14,8 +14,8 @@ import ReportOpportunityShow from './app/validators/ReportOpportunity/Show';
 import SessionStore from './app/validators/Session/Store';
 import UserStore from './app/validators/User/Store';
 
-import AuthToken from './app/middlewares/AuthToken';
-import PipedriveAuth from './app/middlewares/PipedriveAuth';
+import BasicAuth from './app/middlewares/BasicAuth';
+import BearerAuth from './app/middlewares/BearerAuth';
 import RateLimit from './app/middlewares/RateLimit';
 
 import { BruteForce } from './database/redis';
@@ -36,12 +36,12 @@ Route.post('/users', UserStore, UserController.store);
 
 Route.post(
   '/pipedrive/events',
-  PipedriveAuth,
+  BasicAuth,
   PipedriveEventStore,
   PipedriveEventController.store
 );
 
-Route.use(AuthToken);
+Route.use(BearerAuth);
 
 Route.get('/reports', ReportGet, ReportController.index);
 Route.get('/reports/:id', ReportShow, ReportController.show);
