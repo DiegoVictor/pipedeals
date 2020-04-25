@@ -10,7 +10,7 @@ class UpdateDealFieldsName {
       const { data: fields } = await axios.get(
         `${pipedrive_api_url}/dealFields`,
         {
-        params: { api_token: process.env.PIPEDRIVE_API_TOKEN },
+          params: { api_token: process.env.PIPEDRIVE_API_TOKEN },
         }
       );
 
@@ -24,6 +24,7 @@ class UpdateDealFieldsName {
                 option => option.id === parseInt(deal[field.key], 10)
               ).label;
             }
+            delete deal[field.key];
             deal[slugify(field.name.toLowerCase(), '_')] = value;
           }
         });
