@@ -1,14 +1,18 @@
 import { serverUnavailable } from '@hapi/boom';
 import slugify from 'slugify';
+import axios from 'axios';
 
-import Pipedrive from './Pipedrive';
+import { pipedrive_api_url } from '../../config/pipedrive';
 
 class UpdateDealFieldsName {
   async run({ data: deal }) {
     try {
-      const { data: fields } = await Pipedrive.get('/dealFields', {
+      const { data: fields } = await axios.get(
+        `${pipedrive_api_url}/dealFields`,
+        {
         params: { api_token: process.env.PIPEDRIVE_API_TOKEN },
-      });
+        }
+      );
 
       fields.data
         .filter(field => field.edit_flag)
