@@ -73,15 +73,12 @@ class CreateBlingBuyOrder {
       );
     } catch ({ response: { status, statusText, data } }) {
       throw serverUnavailable(
-        `An error occurred while trying to save the order at Bling`,
+        'An error occurred while trying to save the order at Bling',
         {
           code: 531,
           details: {
-            status: {
-              code: status,
-              text: statusText,
-            },
-            ...data,
+            status,
+            statusText,
           },
         }
       );

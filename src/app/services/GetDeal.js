@@ -9,24 +9,21 @@ class GetDeal {
       const { data: deal } = await axios.get(
         `${pipedrive_api_url}/deals/${id}`,
         {
-        params: {
-          api_token: process.env.PIPEDRIVE_API_TOKEN,
-        },
+          params: {
+            api_token: process.env.PIPEDRIVE_API_TOKEN,
+          },
         }
       );
 
       return deal.data;
-    } catch ({ response: { status, statusText, data } }) {
+    } catch ({ response: { status, statusText }, message }) {
       throw serverUnavailable(
-        `An error occurred while trying to retrieve the deal from Pipedrive`,
+        'An error occurred while trying to retrieve the deal from Pipedrive',
         {
           code: 531,
           details: {
-            status: {
-              code: status,
-              text: statusText,
-            },
-            ...data,
+            status,
+            statusText,
           },
         }
       );
