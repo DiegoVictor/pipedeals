@@ -14,7 +14,7 @@ export default (req, _, next) => {
     user !== process.env.PIPEDRIVE_USER ||
     pass !== process.env.PIPEDRIVE_PWD
   ) {
-    throw unauthorized('You are not authorized!', { code: 641 });
+    throw unauthorized('You are not authorized!', 'sample', { code: 641 });
   }
 
   return next();
