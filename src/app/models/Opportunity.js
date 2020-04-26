@@ -72,7 +72,7 @@ const OpportunitySchema = new Schema(
   { timestamps: true }
 );
 
-export async function beforeSave(next) {
+OpportunitySchema.pre('save', async function beforeSave(next) {
   const report = await Report.findOne({
     date: { $gte: startOfDay(new Date()), $lte: endOfDay(new Date()) },
   });
@@ -91,8 +91,6 @@ export async function beforeSave(next) {
     await report.save();
   }
   next();
-}
-
-OpportunitySchema.pre('save', beforeSave);
+});
 
 export default model('Opportunity', OpportunitySchema);
