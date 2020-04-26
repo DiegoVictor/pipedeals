@@ -4,5 +4,5 @@ install:
 node_js:
   - node
 script:
-  - test
+  - yarn test
   - codecov
