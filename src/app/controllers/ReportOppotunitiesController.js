@@ -2,7 +2,7 @@ import { badRequest, notFound } from '@hapi/boom';
 
 import Opportunity from '../models/Opportunity';
 import Report from '../models/Report';
-import PaginationLinks from '../services/PaginationLinks';
+import paginationLinks from '../helpers/paginationLinks';
 import hateoas from '../helpers/hateoas';
 
 const projection = {
@@ -39,13 +39,7 @@ class ReportOpportunitiesController {
 
     const pages_total = Math.ceil(count / limit);
     if (pages_total > 1) {
-      res.links(
-        PaginationLinks.run({
-          resource_url,
-          page,
-          pages_total,
-        })
-      );
+      res.links(paginationLinks(page, pages_total, resource_url));
     }
 
     return res.json(
