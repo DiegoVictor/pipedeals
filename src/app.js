@@ -2,21 +2,14 @@ import 'dotenv/config';
 import 'express-async-errors';
 
 import Express from 'express';
-import Mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import { isBoom } from '@hapi/boom';
 import { errors } from 'celebrate';
 
+import './database/mongodb';
 import routes from './routes';
 import RouteAliases from './app/middlewares/RouteAliases';
-
-Mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-});
 
 const App = Express();
 
