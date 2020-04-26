@@ -68,7 +68,7 @@ class CreateBlingBuyOrder {
                 })
                 .join('')}
             </parcelas>
-          </pedidocompra>`.replace(/>\s+/gi, '')
+          </pedidocompra>`.replace(/>\s+</gi, '><')
         )}`
       );
     } catch ({ response: { status, statusText, data } }) {
