@@ -1,4 +1,4 @@
-export default function hateoas(array, fields) {
+export default (array, fields) => {
   if (Array.isArray(array)) {
     return array.map(item => {
       Object.keys(fields).forEach(key => {
@@ -28,4 +28,4 @@ export default function hateoas(array, fields) {
   });
 
   return array;
-}
+};
