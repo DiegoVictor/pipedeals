@@ -34,7 +34,7 @@ class UpdateDealFieldsName {
       throw serverUnavailable(
         "An error occurred while trying to retrieve the deal's fields from Pipedrive",
         {
-          code: 533,
+          code: 532,
           details: {
             status,
             statusText,

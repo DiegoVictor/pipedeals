@@ -75,7 +75,7 @@ class CreateBlingBuyOrder {
       throw serverUnavailable(
         'An error occurred while trying to save the order at Bling',
         {
-          code: 531,
+          code: 534,
           details: {
             status,
             statusText,

@@ -10,6 +10,6 @@ export default async (req, _, next) => {
     await limiter.consume(req.ip);
     return next();
   } catch (err) {
-    throw tooManyRequests('Too Many Requests', { code: 449 });
+    throw tooManyRequests('Too Many Requests', { code: 749 });
   }
 };

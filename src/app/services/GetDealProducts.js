@@ -27,7 +27,7 @@ class GetDealProducts {
       throw serverUnavailable(
         "An error occurred while trying to retrieve the deal's products from Pipedrive",
         {
-          code: 532,
+          code: 533,
           details: {
             status,
             statusText,

@@ -10,11 +10,11 @@ class SessionController {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw notFound('User not exists', { code: 344 });
+      throw notFound('User not exists', { code: 444 });
     }
 
     if (!(await bcryptjs.compare(password, user.password))) {
-      throw badRequest('User and/or password not match', { code: 340 });
+      throw badRequest('User and/or password not match', { code: 440 });
     }
 
     return res.json({

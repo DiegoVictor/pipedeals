@@ -6,7 +6,7 @@ export default async (req, _, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    throw badRequest('Missing authorization token', { code: 540 });
+    throw badRequest('Missing authorization token', { code: 740 });
   }
 
   try {
@@ -16,6 +16,6 @@ export default async (req, _, next) => {
 
     return next();
   } catch (err) {
-    throw unauthorized('Token expired or invalid', 'sample', { code: 541 });
+    throw unauthorized('Token expired or invalid', 'sample', { code: 741 });
   }
 };

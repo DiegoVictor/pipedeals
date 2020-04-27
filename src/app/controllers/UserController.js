@@ -8,7 +8,7 @@ class UserController {
     const user = await User.findOne({ email });
 
     if (user) {
-      throw badRequest('Email already in use', { code: 440 });
+      throw badRequest('Email already in use', { code: 140 });
     }
     await User.create({ email, password });
 
