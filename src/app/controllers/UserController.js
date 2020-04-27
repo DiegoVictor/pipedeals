@@ -12,7 +12,7 @@ class UserController {
     }
     await User.create({ email, password });
 
-    return res.json({ email });
+    return res.sendStatus(204);
   }
 }
 
