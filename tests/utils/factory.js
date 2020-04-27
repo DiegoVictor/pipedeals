@@ -10,10 +10,9 @@ factory.define(
   {},
   {
     id: faker.random.number,
-    '6427f011f186d62449eb8caf53edb2a52cf959a4': () =>
-      faker.random.number({ min: 1, max: 3 }),
-    '6866136a4bc7b12a75897df3d7ae168b46497b10': faker.company.companyName,
-    '4275aa493fbf4aeeefb0d918cd90df6273655368': faker.random.word,
+    parcels: () => faker.random.number({ min: 1, max: 3 }),
+    supplier: faker.company.companyName,
+    payment_method: faker.random.word,
     person_id: {
       name: faker.name.findName,
     },
@@ -74,6 +73,7 @@ factory.define('Opportunity', Opportunity, () => {
     ],
     payment_method: faker.random.word,
     amount: quantity * unitary_value,
+    createdAt: faker.date.past,
   };
 });
 
