@@ -32,7 +32,7 @@ class UpdateDealFieldsName {
       return deal;
     } catch ({ response: { status, statusText, data } }) {
       throw serverUnavailable(
-        "An error occurred while trying to retrieve the deal's fields from Pipedrive",
+        "An error occurred while trying to retrieve the deal's custom fields from Pipedrive",
         {
           code: 532,
           details: {
