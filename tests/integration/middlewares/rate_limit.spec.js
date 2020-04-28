@@ -23,7 +23,7 @@ describe('RateLimit middleware', () => {
 
     Promise.all(requests).catch(err => {
       expect({ ...err }).toStrictEqual({
-        data: { code: 449 },
+        data: { code: 749 },
         isBoom: true,
         isServer: false,
         output: {
