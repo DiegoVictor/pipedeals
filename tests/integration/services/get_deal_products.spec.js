@@ -1,0 +1,40 @@
+import faker from 'faker';
+
+import GetDealProducts from '../../../src/app/services/GetDealProducts';
+import { axios } from '../../../mocks/axios';
+import { pipedrive_api_url } from '../../../src/config/pipedrive';
+
+describe('GetDealProducts service', () => {
+  it('should be able to get Pipedrive response error', () => {
+    const id = faker.random.number();
+
+    axios
+      .setBaseUrl(pipedrive_api_url)
+      .onGet(`/deals/${id}/products`)
+      .reply(401, 'Unauthorized');
+
+    GetDealProducts.run({ id }).catch(err => {
+      expect({ ...err }).toStrictEqual({
+        data: {
+          code: 533,
+          details: {
+            status: 401,
+            statusText: 'Unauthorized',
+          },
+        },
+        isBoom: true,
+        isServer: true,
+        output: {
+          headers: {},
+          payload: {
+            error: 'Service Unavailable',
+            message:
+              "An error occurred while trying to retrieve the deal's products from Pipedrive",
+            statusCode: 503,
+          },
+          statusCode: 503,
+        },
+      });
+    });
+  });
+});
