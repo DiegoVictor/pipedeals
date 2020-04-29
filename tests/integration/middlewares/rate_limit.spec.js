@@ -21,6 +21,7 @@ describe('RateLimit middleware', () => {
       i += 1;
     }
 
+    const message = 'Too Many Requests';
     Promise.all(requests).catch(err => {
       expect({ ...err }).toStrictEqual({
         data: { code: 749 },
@@ -30,8 +31,8 @@ describe('RateLimit middleware', () => {
           statusCode: 429,
           payload: {
             statusCode: 429,
-            error: 'Too Many Requests',
-            message: 'Too Many Requests',
+            error: message,
+            message,
           },
           headers: {},
         },

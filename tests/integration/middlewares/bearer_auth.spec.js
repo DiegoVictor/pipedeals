@@ -42,6 +42,7 @@ describe('BearerAuth middleware', () => {
       },
     };
 
+    const message = 'Token expired or invalid';
     BearerAuth(req, res, jest.fn()).catch(err => {
       expect({ ...err }).toStrictEqual({
         data: null,
@@ -52,15 +53,14 @@ describe('BearerAuth middleware', () => {
           payload: {
             attributes: {
               code: 741,
-              error: 'Token expired or invalid',
+              error: message,
             },
             statusCode: 401,
             error: 'Unauthorized',
-            message: 'Token expired or invalid',
+            message,
           },
           headers: {
-            'WWW-Authenticate':
-              'sample code="741", error="Token expired or invalid"',
+            'WWW-Authenticate': `sample code="741", error="${message}"`,
           },
         },
       });

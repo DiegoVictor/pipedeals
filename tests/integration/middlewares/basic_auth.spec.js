@@ -44,6 +44,7 @@ describe('BasicAuth middleware', () => {
     try {
       BasicAuth(req, res, jest.fn());
     } catch (err) {
+      const message = 'You are not authorized!';
       expect({ ...err }).toStrictEqual({
         data: null,
         isBoom: true,
@@ -53,15 +54,14 @@ describe('BasicAuth middleware', () => {
           payload: {
             attributes: {
               code: 641,
-              error: 'You are not authorized!',
+              error: message,
             },
             statusCode: 401,
             error: 'Unauthorized',
-            message: 'You are not authorized!',
+            message,
           },
           headers: {
-            'WWW-Authenticate':
-              'sample code="641", error="You are not authorized!"',
+            'WWW-Authenticate': `sample code="641", error="${message}"`,
           },
         },
       });
