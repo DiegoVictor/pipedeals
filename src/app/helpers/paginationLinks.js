@@ -1,6 +1,5 @@
 export default (page, pages_total, resource_url) => {
   const url = `${resource_url}?page=`;
-
   const links = {};
 
   if (pages_total > 1) {
