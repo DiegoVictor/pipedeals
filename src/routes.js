@@ -11,6 +11,7 @@ import EmailAndPasswordValidator from './app/validators/EmailAndPasswordValidato
 import PageValidator from './app/validators/PageValidator';
 import IdValidator from './app/validators/IdValidator';
 import ReportIdValidator from './app/validators/ReportIdValidator';
+import IdAndReportIdValidator from './app/validators/IdAndReportIdValidator';
 
 import BasicAuth from './app/middlewares/BasicAuth';
 import BearerAuth from './app/middlewares/BearerAuth';
@@ -52,8 +53,7 @@ Route.get(
 );
 Route.get(
   '/reports/:report_id/opportunities/:id',
-  IdValidator,
-  ReportIdValidator,
+  IdAndReportIdValidator,
   ReportOppotunitiesController.show
 );
 
