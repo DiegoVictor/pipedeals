@@ -5,7 +5,6 @@ Joi.objectId = ObjectId(Joi);
 
 export default celebrate({
   [Segments.PARAMS]: Joi.object().keys({
-    id: Joi.objectId().required(),
     report_id: Joi.objectId().required(),
   }),
 });
