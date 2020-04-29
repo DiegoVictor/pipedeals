@@ -29,7 +29,7 @@ describe('UpdateDealFieldsName service', () => {
           payload: {
             error: 'Service Unavailable',
             message:
-              "An error occurred while trying to retrieve the deal's fields from Pipedrive",
+              "An error occurred while trying to retrieve the deal's custom fields from Pipedrive",
             statusCode: 503,
           },
           statusCode: 503,
