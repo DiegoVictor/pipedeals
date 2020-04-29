@@ -16,24 +16,27 @@ describe('User controller', () => {
 
   it('should be able to store a new user', async () => {
     const { email, password } = await factory.attrs('User');
-    const { body } = await request(app)
+    const response = await request(app)
       .post('/v1/users')
+      .expect(204)
       .send({ email, password });
 
-    expect(body).toMatchObject({ email });
+    expect(response.body).toStrictEqual({});
   });
 
   it('should not be able to store a new user with a duplicated email', async () => {
     const [{ email }, { password }] = await factory.createMany('User', 2);
-    const { body } = await request(app)
+    const response = await request(app)
       .post('/v1/users')
-      .expect(401)
+      .expect(400)
       .send({ email, password });
 
-    expect(body).toStrictEqual({
-      error: {
-        message: 'Email already in use',
-      },
+    expect(response.body).toStrictEqual({
+      statusCode: 400,
+      error: 'Bad Request',
+      message: 'Email already in use',
+      code: 140,
+      docs: process.env.DOCS_URL,
     });
   });
 });

@@ -18,11 +18,11 @@ describe('Session controller', () => {
   it('should be able to login', async () => {
     const { email, password } = await factory.attrs('User');
     const user = await User.create({ email, password });
-    const { body } = await request(app)
+    const response = await request(app)
       .post('/v1/sessions')
       .send({ email, password });
 
-    expect(body).toMatchObject({
+    expect(response.body).toMatchObject({
       user: { _id: user._id.toString(), email },
       token: expect.any(String),
     });
@@ -30,32 +30,37 @@ describe('Session controller', () => {
 
   it('should not be able to login with user that not exists', async () => {
     const { email, password } = await factory.attrs('User');
-    const { body } = await request(app)
+    const response = await request(app)
       .post('/v1/sessions')
       .expect(404)
       .send({ email, password });
 
-    expect(body).toStrictEqual({
-      error: {
-        message: 'User not exists',
-      },
+    expect(response.body).toStrictEqual({
+      statusCode: 404,
+      error: 'Not Found',
+      message: 'User not exists',
+      code: 444,
+      docs: process.env.DOCS_URL,
     });
   });
 
-  it('should be able to login', async () => {
+  it('should not be able to login', async () => {
     const wrong_password = faker.internet.password();
     const { name, email, password } = await factory.attrs('User');
+
     await User.create({ name, email, password });
 
-    const { body } = await request(app)
+    const response = await request(app)
       .post('/v1/sessions')
       .expect(400)
       .send({ email, password: wrong_password });
 
-    expect(body).toMatchObject({
-      error: {
-        message: 'User and/or password not match',
-      },
+    expect(response.body).toMatchObject({
+      statusCode: 400,
+      error: 'Bad Request',
+      message: 'User and/or password not match',
+      code: 440,
+      docs: process.env.DOCS_URL,
     });
   });
 });
