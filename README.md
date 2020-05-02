@@ -244,13 +244,13 @@ GET http://localhost:3333/v1/reports
 ## Routes
 |route|HTTP Method|pagination|params|description|auth method
 |:---|:---:|:---:|:---:|:---|:---:
-|`/sessions`|POST|:x:|Body with user's `email`.|Authenticates user, return a Bearer Token and user's id and email|:x:
-|`/users`|POST|:x:|Body with user's `email` and `password`.|Create new users|:x:
-|`/pipedrive/events`|POST|:x:|Body with event's `event`, `current.id` and `current.status`.|Receive Piedrive deal's won event|Basic
-|`/reports`|GET|:heavy_check_mark:|`page` query parameter|List reports|Bearer
-|`/reports/:id`|GET|:x:|`:id` of the report|Return one report|Bearer
-|`/reports/:report_id/opportunities`|GET|:heavy_check_mark:|`:report_id` of the report and `page` query parameter|List report's opportunities|Bearer
-|`/reports/:report_id/opportunities/:id`|GET|:x:|`:report_id` of the report and `:id` of the opportunity|Return one report's opportunity|Bearer
+|`/sessions`|POST|:x:|Body with user's `email`.|Authenticates user, return a Bearer Token and user's id and email.|:x:
+|`/users`|POST|:x:|Body with user's `email` and `password`.|Create new users.|:x:
+|`/pipedrive/events`|POST|:x:|Body with event's `event`, `current.id` and `current.status`.|Receive Piedrive deal's won event.|Basic
+|`/reports`|GET|:heavy_check_mark:|`page` query parameter.|List reports.|Bearer
+|`/reports/:id`|GET|:x:|`:id` of the report.|Return one report.|Bearer
+|`/reports/:report_id/opportunities`|GET|:heavy_check_mark:|`:report_id` of the report and `page` query parameter.|List report's opportunities.|Bearer
+|`/reports/:report_id/opportunities/:id`|GET|:x:|`:report_id` of the report and `:id` of the opportunity.|Return one report's opportunity.|Bearer
 
 > Routes with `Bearer` as auth method expect an `Authorization` header. See [Bearer Token](#bearer-token) section for more information. `Basic` authentication is a base64 encoding of `PIPEDRIVE_USER` and `PIPEDRIVE_PWD` joined by a `:`, but you should not make manual requests to this endpoint (this will be responsability of the Pipedrive's [webhook](#webhook)).
 
