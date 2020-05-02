@@ -1,31 +1,23 @@
-export default (array, fields) => {
-  if (Array.isArray(array)) {
-    return array.map(item => {
-      Object.keys(fields).forEach(key => {
-        if (typeof fields[key] === 'object') {
-          item[key] = {};
-          Object.keys(fields[key]).forEach(subkey => {
-            item[key][subkey] = fields[key][subkey].replace(':id', item._id);
-          });
-        } else {
-          item[key] = fields[key].replace(':id', item._id);
-        }
-      });
+export default function hateoas(data, fields) {
+  if (Array.isArray(data)) {
+    const result = [...data];
 
-      return item;
+    return result.map(item => {
+      return hateoas(item, fields);
     });
   }
 
-  Object.keys(fields).forEach(key => {
-    if (typeof fields[key] === 'object') {
-      array[key] = {};
-      Object.keys(fields[key]).forEach(subkey => {
-        array[key][subkey] = fields[key][subkey].replace(':id', array._id);
+  const result = { ...data };
+  Object.keys(fields).forEach(name => {
+    if (typeof fields[name] === 'object') {
+      result[name] = result[name] || {};
+      Object.keys(fields[name]).forEach(key => {
+        result[name][key] = fields[name][key].replace(':id', result._id);
       });
     } else {
-      array[key] = fields[key].replace(':id', array._id);
+      result[name] = fields[name].replace(':id', result._id);
     }
   });
 
-  return array;
-};
+  return result;
+}
