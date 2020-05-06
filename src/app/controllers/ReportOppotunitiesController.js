@@ -5,18 +5,20 @@ import Report from '../models/Report';
 import paginationLinks from '../helpers/paginationLinks';
 import hateoas from '../helpers/hateoas';
 
-const projection = {
-  report_id: false,
-  'supplier._id': false,
-  'client._id': false,
-  'parcels._id': false,
-  'items._id': false,
-  createdAt: false,
-  updatedAt: false,
-  __v: false,
-};
-
 class ReportOpportunitiesController {
+  static get projection() {
+    return {
+      report_id: false,
+      'supplier._id': false,
+      'client._id': false,
+      'parcels._id': false,
+      'items._id': false,
+      createdAt: false,
+      updatedAt: false,
+      __v: false,
+    };
+  }
+
   async index(req, res) {
     const { base_url, resource_url } = req;
     const { report_id } = req.params;
@@ -28,7 +30,10 @@ class ReportOpportunitiesController {
       throw badRequest('Report not found', { code: 340 });
     }
 
-    const opportunities = await Opportunity.find({ report_id }, projection)
+    const opportunities = await Opportunity.find(
+      { report_id },
+      ReportOpportunitiesController.projection
+    )
       .lean()
       .sort('createdAt')
       .skip((page - 1) * limit)
@@ -59,7 +64,7 @@ class ReportOpportunitiesController {
 
     const opportunity = await Opportunity.findOne(
       { _id: id, report_id },
-      projection
+      ReportOpportunitiesController.projection
     ).lean();
     if (!opportunity) {
       throw notFound('Opportunity not found', { code: 344 });

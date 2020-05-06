@@ -5,12 +5,16 @@ import paginationLinks from '../helpers/paginationLinks';
 import hateoas from '../helpers/hateoas';
 
 class ReportController {
+  static get projection() {
+    return { amount: true, date: true };
+  }
+
   async index(req, res) {
     const { base_url, resource_url } = req;
     const { page = 1 } = req.query;
     const limit = 10;
 
-    const reports = await Report.find(null, { amount: true, date: true })
+    const reports = await Report.find(null, ReportController.projection)
       .lean()
       .sort('-date')
       .skip((page - 1) * limit)
@@ -36,10 +40,10 @@ class ReportController {
     const { base_url, resource_url } = req;
     const { id } = req.params;
 
-    const report = await Report.findById(id, {
-      amount: true,
-      date: true,
-    }).lean();
+    const report = await Report.findById(
+      id,
+      ReportController.projection
+    ).lean();
     if (!report) {
       throw notFound('Report not found', { code: 244 });
     }
