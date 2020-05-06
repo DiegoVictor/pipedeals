@@ -2,7 +2,6 @@ import { notFound } from '@hapi/boom';
 
 import Report from '../models/Report';
 import paginationLinks from '../helpers/paginationLinks';
-import hateoas from '../helpers/hateoas';
 
 class ReportController {
   static get projection() {
@@ -10,7 +9,7 @@ class ReportController {
   }
 
   async index(req, res) {
-    const { base_url, resource_url } = req;
+    const { current_url } = req;
     const { page = 1 } = req.query;
     const limit = 10;
 
@@ -25,19 +24,20 @@ class ReportController {
 
     const pages_total = Math.ceil(count / limit);
     if (pages_total > 1) {
-      res.links(paginationLinks(page, pages_total, resource_url));
+      res.links(paginationLinks(page, pages_total, current_url));
     }
 
     return res.json(
-      hateoas(reports, {
-        url: `${resource_url}/:id`,
-        opportunities_url: `${base_url}/v1/reports/:id/opportunities`,
-      })
+      reports.map(report => ({
+        ...report,
+        url: `${current_url}/${report._id}`,
+        opportunities_url: `${current_url}/${report._id}/opportunities`,
+      }))
     );
   }
 
   async show(req, res) {
-    const { base_url, resource_url } = req;
+    const { current_url } = req;
     const { id } = req.params;
 
     const report = await Report.findById(
@@ -48,12 +48,11 @@ class ReportController {
       throw notFound('Report not found', { code: 244 });
     }
 
-    return res.json(
-      hateoas(report, {
-        url: resource_url,
-        opportunities_url: `${base_url}/v1/reports/:id/opportunities`,
-      })
-    );
+    return res.json({
+      ...report,
+      opportunities_url: `${current_url}/opportunities`,
+      url: current_url,
+    });
   }
 }
 

@@ -8,7 +8,7 @@ import factory from '../../utils/factory';
 import jwtoken from '../../utils/jwtoken';
 
 describe('Report controller', () => {
-  const base_url = `http://127.0.0.1:${process.env.APP_PORT}/v1`;
+  const url = `http://127.0.0.1:${process.env.APP_PORT}/v1`;
 
   beforeEach(async () => {
     await User.deleteMany();
@@ -48,8 +48,8 @@ describe('Report controller', () => {
           _id: _id.toString(),
           amount,
           date: date.toISOString(),
-          url: `${base_url}/reports/${_id}`,
-          opportunities_url: `${base_url}/reports/${_id}/opportunities`,
+          url: `${url}/reports/${_id}`,
+          opportunities_url: `${url}/reports/${_id}/opportunities`,
         });
       });
   });
@@ -68,8 +68,8 @@ describe('Report controller', () => {
       _id: _id.toString(),
       amount,
       date: date.toISOString(),
-      url: `${base_url}/reports/${_id}`,
-      opportunities_url: `${base_url}/reports/${_id}/opportunities`,
+      url: `${url}/reports/${_id}`,
+      opportunities_url: `${url}/reports/${_id}/opportunities`,
     });
   });
 

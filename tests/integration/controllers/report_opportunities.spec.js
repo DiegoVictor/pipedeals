@@ -9,7 +9,7 @@ import factory from '../../utils/factory';
 import jwtoken from '../../utils/jwtoken';
 
 describe('Report controller', () => {
-  const base_url = `http://127.0.0.1:${process.env.APP_PORT}/v1`;
+  const url = `http://127.0.0.1:${process.env.APP_PORT}/v1`;
 
   beforeEach(async () => {
     await User.deleteMany();
@@ -66,11 +66,8 @@ describe('Report controller', () => {
             })
           ),
         ],
-        url: `${base_url}/reports/${report_id}/opportunities/${opportunity._id}`,
-        report: {
-          _id: report_id.toString(),
-          url: `${base_url}/reports/${report_id}`,
-        },
+        report_url: `${url}/reports/${report_id}`,
+        url: `${url}/reports/${report_id}/opportunities/${opportunity._id}`,
       });
     });
   });
@@ -131,11 +128,8 @@ describe('Report controller', () => {
             })
           ),
         ],
-        url: `${base_url}/reports/${report_id}/opportunities/${opportunity._id}`,
-        report: {
-          _id: report_id.toString(),
-          url: `${base_url}/reports/${report_id}`,
-        },
+        report_url: `${url}/reports/${report_id}`,
+        url: `${url}/reports/${report_id}/opportunities/${opportunity._id}`,
       });
     });
   });
@@ -203,11 +197,8 @@ describe('Report controller', () => {
         })),
       ],
       payment_method: opportunity.payment_method,
-      report: {
-        _id: report_id.toString(),
-        url: `${base_url}/reports/${report_id}`,
-      },
-      url: `${base_url}/reports/${report_id}/opportunities/${opportunity._id}`,
+      report_url: `${url}/reports/${report_id}`,
+      url: `${url}/reports/${report_id}/opportunities/${opportunity._id}`,
     });
   });
 
