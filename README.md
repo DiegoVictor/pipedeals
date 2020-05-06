@@ -197,8 +197,8 @@ Instead of only throw a simple message and HTTP Status Code this API return frie
 |244|Report not found|The `id` sent not references an existing report in the database.
 |340|Report not found|The `report_id` sent not references an existing report in the database.
 |344|Opportunity not found|The `id` sent not references an existing opportunity in the database.
-|444|User not exists|The `email` sent not references an existing user in the database.
-|440|User and/or password not match|User and/or password is incorrect.
+|440|User not exists|The `email` sent not references an existing user in the database.
+|450|User and/or password not match|User and/or password is incorrect.
 |140|Email already in use|Already exists an user with the same email.
 |640|Missing authorization|Pipedrive's webhook is not sending the Basic auth's user and password.
 |641|You are not authorized!|Pipedrive's webhook is sending wrong Basic credentials.

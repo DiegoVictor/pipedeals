@@ -32,14 +32,14 @@ describe('Session controller', () => {
     const { email, password } = await factory.attrs('User');
     const response = await request(app)
       .post('/v1/sessions')
-      .expect(404)
+      .expect(400)
       .send({ email, password });
 
     expect(response.body).toStrictEqual({
-      statusCode: 404,
-      error: 'Not Found',
+      statusCode: 400,
+      error: 'Bad Request',
       message: 'User not exists',
-      code: 444,
+      code: 440,
       docs: process.env.DOCS_URL,
     });
   });
@@ -59,7 +59,7 @@ describe('Session controller', () => {
       statusCode: 400,
       error: 'Bad Request',
       message: 'User and/or password not match',
-      code: 440,
+      code: 450,
       docs: process.env.DOCS_URL,
     });
   });
