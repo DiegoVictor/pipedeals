@@ -3,12 +3,12 @@ import jwt from 'jsonwebtoken';
 
 import BasicAuth from '../../../src/app/middlewares/BasicAuth';
 
-const res = {
-  status: jest.fn(() => res),
-  json: jest.fn(response => response),
-};
-
 describe('BasicAuth middleware', () => {
+  const res = {
+    status: jest.fn(() => res),
+    json: jest.fn(response => response),
+  };
+
   it('should not be able to request without a token', async () => {
     const req = { headers: {} };
 

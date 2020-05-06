@@ -3,12 +3,12 @@ import jwt from 'jsonwebtoken';
 
 import BearerAuth from '../../../src/app/middlewares/BearerAuth';
 
-const res = {
-  status: jest.fn(() => res),
-  json: jest.fn(response => response),
-};
-
 describe('BearerAuth middleware', () => {
+  const res = {
+    status: jest.fn(() => res),
+    json: jest.fn(response => response),
+  };
+
   it('should not be able to request without a token', () => {
     const req = { headers: {} };
     BearerAuth(req, res, jest.fn()).catch(err => {
