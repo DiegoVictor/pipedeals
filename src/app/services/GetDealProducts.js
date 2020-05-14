@@ -23,7 +23,7 @@ class GetDealProducts {
       });
 
       return items;
-    } catch ({ response: { status, statusText, data } }) {
+    } catch ({ response: { status, statusText } }) {
       throw serverUnavailable(
         "An error occurred while trying to retrieve the deal's products from Pipedrive",
         {

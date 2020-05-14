@@ -71,7 +71,7 @@ class CreateBlingBuyOrder {
           </pedidocompra>`.replace(/>\s+</gi, '><')
         )}`
       );
-    } catch ({ response: { status, statusText, data } }) {
+    } catch ({ response: { status, statusText } }) {
       throw serverUnavailable(
         'An error occurred while trying to save the order at Bling',
         {

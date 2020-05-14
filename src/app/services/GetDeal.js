@@ -16,7 +16,7 @@ class GetDeal {
       );
 
       return deal.data;
-    } catch ({ response: { status, statusText }, message }) {
+    } catch ({ response: { status, statusText } }) {
       throw serverUnavailable(
         'An error occurred while trying to retrieve the deal from Pipedrive',
         {
