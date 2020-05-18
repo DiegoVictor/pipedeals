@@ -71,7 +71,7 @@ In this file you may configure your MongoDB and Redis database connection, JWT s
 |---|---|---
 |APP_PORT|Port number where the app will run.|`3333`
 |NODE_ENV|App environment.|`development`
-|JWT_SECRET|An alphanumeric random string. Used to create signed tokens.|-
+|JWT_SECRET|An alphanumeric random string. Used to create signed tokens.| -
 |JWT_EXPIRATION_TIME|How long time will be the token valid. See [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#usage) repo for more information.|`7d`
 |MONGO_URL|MongoDB's server url.|`mongodb://127.0.0.1:27017/pipedeals`
 |REDIS_HOST|Redis host.|`127.0.0.1`
@@ -179,7 +179,7 @@ Instead of only throw a simple message and HTTP Status Code this API return frie
   "statusCode": 429,
   "error": "Too Many Requests",
   "message": "Too Many Requests",
-  "code": 449,
+  "code": 749,
   "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
 }
 ```
