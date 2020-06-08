@@ -10,7 +10,7 @@ factory.define(
   {},
   {
     id: faker.random.number,
-    parcels: () => faker.random.number({ min: 1, max: 3 }),
+    parcels: () => faker.random.number({ min: 2, max: 5 }),
     supplier: faker.company.companyName,
     payment_method: faker.random.word,
     person_id: {
@@ -41,13 +41,14 @@ factory.define(
   {},
   {
     name: faker.commerce.productName,
-    quantity: () => faker.random.number({ min: 1, max: 5 }),
-    item_price: faker.finance.amount,
+    quantity: () => faker.random.number({ min: 2, max: 5 }),
+    item_price: () =>
+      Number(Math.floor(faker.finance.amount()) + Math.random()).toFixed(2),
   }
 );
 
 factory.define('Opportunity', Opportunity, () => {
-  const quantity = faker.random.number({ min: 1, max: 3 });
+  const quantity = faker.random.number({ min: 2, max: 5 });
   const unitary_value = faker.finance.amount();
 
   return {
