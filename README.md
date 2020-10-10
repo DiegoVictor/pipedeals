@@ -244,7 +244,7 @@ GET http://localhost:3333/v1/reports
 ## Routes
 |route|HTTP Method|pagination|params|description|auth method
 |:---|:---:|:---:|:---:|:---|:---:
-|`/sessions`|POST|:x:|Body with user's `email`.|Authenticates user, return a Bearer Token and user's id and email.|:x:
+|`/sessions`|POST|:x:|Body with user's `email` and `password`.|Authenticates user, return a Bearer Token and user's id and email.|:x:
 |`/users`|POST|:x:|Body with user's `email` and `password`.|Create new users.|:x:
 |`/pipedrive/events`|POST|:x:|Body with event's `event`, `current.id` and `current.status`.|Receive Piedrive deal's won event.|Basic
 |`/reports`|GET|:heavy_check_mark:|`page` query parameter.|List reports.|Bearer
