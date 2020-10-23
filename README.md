@@ -24,7 +24,7 @@ The main purpose of Pipedeals is listen to [Pipedrive](https://www.pipedrive.com
       * [Product](#product)
     * [Bling's API Key](#blings-api-key)
       * [Permissions](#permissions)
-    * [Rate Limit & Brute Force (Optional)](#rate-limit--brute-force-optional)
+    * [Brute Force (Optional)](#brute-force-optional)
 * [Usage](#usage)
   * [Error Handling](#error-handling)
     * [Errors Reference](#errors-reference)
@@ -147,16 +147,8 @@ The following permissions are necessary to the API user:
 ![permissions buy order](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/permissions_buy_order.png)<br>
 ![permissions sales](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/permissions_sales.png)
 
-## Rate Limit & Brute Force (Optional)
+## Brute Force (Optional)
 The project comes pre-configured, but you can adjust it as your needs.
-* `src/config/ratelimit.js`
-
-|key|description|default
-|---|---|---
-|duration|Number of seconds before consumed points are reset.|`300`
-|points|Maximum number of points can be consumed over duration.|`10`
-
-> The lib [`rate-limiter-flexible`](https://github.com/animir/node-rate-limiter-flexible) was used to rate the API's limits, for more configuration information go to [Options](https://github.com/animir/node-rate-limiter-flexible/wiki/Options#options) page.
 
 * `src/config/bruteforce.js`
 > `rate-limiter-flexible` was also used to configure brute force prevention, but with a different method of configuration that you can see in [ExpressBrute migration](https://github.com/animir/node-rate-limiter-flexible/wiki/ExpressBrute-migration#options).
@@ -176,10 +168,10 @@ Then create new deals, make it pass through your funnel, etc, when you mark that
 Instead of only throw a simple message and HTTP Status Code this API return friendly errors:
 ```json
 {
-  "statusCode": 429,
-  "error": "Too Many Requests",
-  "message": "Too Many Requests",
-  "code": 749,
+  "statusCode": 401,
+  "error": "Unauthorized",
+  "message": "You are not authorized!",
+  "code": 741,
   "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
 }
 ```
@@ -204,7 +196,6 @@ Instead of only throw a simple message and HTTP Status Code this API return frie
 |641|You are not authorized!|Pipedrive's webhook is sending wrong Basic credentials.
 |740|Missing authorization token|The Bearer Token was not sent.
 |741|You are not authorized!|The Bearer Token provided is invalid or expired.
-|749|Too Many Requests|You reached at the requests limit.
 
 ## Pagination
 All the routes with pagination returns 10 records per page, to navigate to other pages just send the `page` query parameter with the number of the page.

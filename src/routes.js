@@ -15,7 +15,6 @@ import IdAndReportIdValidator from './app/validators/IdAndReportIdValidator';
 
 import BasicAuth from './app/middlewares/BasicAuth';
 import BearerAuth from './app/middlewares/BearerAuth';
-import RateLimit from './app/middlewares/RateLimit';
 
 import { BruteForce } from './database/redis';
 import config from './config/bruteforce';
@@ -28,8 +27,6 @@ Route.post(
   EmailAndPasswordValidator,
   SessionController.store
 );
-
-Route.use(RateLimit);
 
 Route.post('/users', EmailAndPasswordValidator, UserController.store);
 
