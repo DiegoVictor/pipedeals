@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "sucrase ./src -d ./dist --transforms imports",
-    "start": "nodemon src/server.js",
+    "dev:server": "nodemon --legacy-watch src/server.js",
     "test": "jest --runInBand"
   },
   "dependencies": {
