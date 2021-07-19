@@ -16,17 +16,9 @@ import IdAndReportIdValidator from './app/validators/IdAndReportIdValidator';
 import BasicAuth from './app/middlewares/BasicAuth';
 import BearerAuth from './app/middlewares/BearerAuth';
 
-import { BruteForce } from './database/redis';
-import config from './config/bruteforce';
-
 const Route = Router();
 
-Route.post(
-  '/sessions',
-  new BruteForce(config).prevent,
-  EmailAndPasswordValidator,
-  SessionController.store
-);
+Route.post('/sessions', EmailAndPasswordValidator, SessionController.store);
 
 Route.post('/users', EmailAndPasswordValidator, UserController.store);
 
