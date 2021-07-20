@@ -1,19 +1,22 @@
 import faker from 'faker';
 import jwt from 'jsonwebtoken';
 
-import BearerAuth from '../../../src/app/middlewares/BearerAuth';
+import basicAuth from '../../../src/app/middlewares/basicAuth';
 
-describe('BearerAuth middleware', () => {
+describe('basicAuth', () => {
   const res = {
     status: jest.fn(() => res),
     json: jest.fn(response => response),
   };
 
-  it('should not be able to request without a token', () => {
+  it('should not be able to request without a token', async () => {
     const req = { headers: {} };
-    BearerAuth(req, res, jest.fn()).catch(err => {
+
+    try {
+      basicAuth(req, res, jest.fn());
+    } catch (err) {
       expect({ ...err }).toStrictEqual({
-        data: { code: 740 },
+        data: { code: 640 },
         isBoom: true,
         isServer: false,
         output: {
@@ -21,20 +24,20 @@ describe('BearerAuth middleware', () => {
           payload: {
             statusCode: 400,
             error: 'Bad Request',
-            message: 'Missing authorization token',
+            message: 'Missing authorization',
           },
           headers: {},
         },
       });
-    });
+    }
   });
 
   it('should not be able to request with a invalid token', async () => {
     const req = {
       headers: {
         authorization: `Bearer ${jwt.sign(
-          { id: faker.random.number() },
-          faker.random.alphaNumeric(29),
+          { id: faker.datatype.number() },
+          '7d',
           {
             expiresIn: '-1d',
           }
@@ -42,8 +45,10 @@ describe('BearerAuth middleware', () => {
       },
     };
 
-    const message = 'Token expired or invalid';
-    BearerAuth(req, res, jest.fn()).catch(err => {
+    try {
+      basicAuth(req, res, jest.fn());
+    } catch (err) {
+      const message = 'You are not authorized!';
       expect({ ...err }).toStrictEqual({
         data: null,
         isBoom: true,
@@ -52,7 +57,7 @@ describe('BearerAuth middleware', () => {
           statusCode: 401,
           payload: {
             attributes: {
-              code: 741,
+              code: 641,
               error: message,
             },
             statusCode: 401,
@@ -60,10 +65,10 @@ describe('BearerAuth middleware', () => {
             message,
           },
           headers: {
-            'WWW-Authenticate': `sample code="741", error="${message}"`,
+            'WWW-Authenticate': `sample code="641", error="${message}"`,
           },
         },
       });
-    });
+    }
   });
 });

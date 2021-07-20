@@ -1,22 +1,19 @@
 import faker from 'faker';
 import jwt from 'jsonwebtoken';
 
-import BasicAuth from '../../../src/app/middlewares/BasicAuth';
+import bearerAuth from '../../../src/app/middlewares/bearerAuth';
 
-describe('BasicAuth middleware', () => {
+describe('bearerAuth', () => {
   const res = {
     status: jest.fn(() => res),
     json: jest.fn(response => response),
   };
 
-  it('should not be able to request without a token', async () => {
+  it('should not be able to request without a token', () => {
     const req = { headers: {} };
-
-    try {
-      BasicAuth(req, res, jest.fn());
-    } catch (err) {
+    bearerAuth(req, res, jest.fn()).catch(err => {
       expect({ ...err }).toStrictEqual({
-        data: { code: 640 },
+        data: { code: 740 },
         isBoom: true,
         isServer: false,
         output: {
@@ -24,27 +21,29 @@ describe('BasicAuth middleware', () => {
           payload: {
             statusCode: 400,
             error: 'Bad Request',
-            message: 'Missing authorization',
+            message: 'Missing authorization token',
           },
           headers: {},
         },
       });
-    }
+    });
   });
 
   it('should not be able to request with a invalid token', async () => {
     const req = {
       headers: {
-        authorization: `Bearer ${jwt.sign({ id: faker.random.number() }, '7d', {
-          expiresIn: '-1d',
-        })}`,
+        authorization: `Bearer ${jwt.sign(
+          { id: faker.datatype.number() },
+          faker.random.alphaNumeric(29),
+          {
+            expiresIn: '-1d',
+          }
+        )}`,
       },
     };
 
-    try {
-      BasicAuth(req, res, jest.fn());
-    } catch (err) {
-      const message = 'You are not authorized!';
+    const message = 'Token expired or invalid';
+    bearerAuth(req, res, jest.fn()).catch(err => {
       expect({ ...err }).toStrictEqual({
         data: null,
         isBoom: true,
@@ -53,7 +52,7 @@ describe('BasicAuth middleware', () => {
           statusCode: 401,
           payload: {
             attributes: {
-              code: 641,
+              code: 741,
               error: message,
             },
             statusCode: 401,
@@ -61,10 +60,10 @@ describe('BasicAuth middleware', () => {
             message,
           },
           headers: {
-            'WWW-Authenticate': `sample code="641", error="${message}"`,
+            'WWW-Authenticate': `sample code="741", error="${message}"`,
           },
         },
       });
-    }
+    });
   });
 });

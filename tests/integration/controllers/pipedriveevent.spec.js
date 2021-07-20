@@ -1,5 +1,5 @@
 import request from 'supertest';
-import Mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import btoa from 'btoa';
 import faker from 'faker';
 
@@ -8,11 +8,11 @@ import Report from '../../../src/app/models/Report';
 import factory from '../../utils/factory';
 import Opportunity from '../../../src/app/models/Opportunity';
 import { axios } from '../../../mocks/axios';
-import { pipedrive_api_url } from '../../../src/config/pipedrive';
+import { pipedriveApiUrl } from '../../../src/config/pipedrive';
 
-describe('PipedriveEvent controller', () => {
-  const payment_method = faker.random.word();
-  const payment_method_id = faker.random.number();
+describe('PipedriveEvent', () => {
+  const paymentMethod = faker.random.word();
+  const paymentMethodId = faker.datatype.number();
 
   beforeEach(async () => {
     await Report.deleteMany();
@@ -20,17 +20,17 @@ describe('PipedriveEvent controller', () => {
   });
 
   afterAll(async () => {
-    await Mongoose.disconnect();
+    await mongoose.disconnect();
   });
 
   it('should be able to save an opportunity', async () => {
     const product = await factory.attrs('Product');
     const deal = await factory.attrs('Deal', {
-      payment_method: payment_method_id,
+      payment_method: paymentMethodId,
     });
 
     axios
-      .setBaseUrl(pipedrive_api_url)
+      .setBaseUrl(pipedriveApiUrl)
       .onGet(`/deals/${deal.id}`)
       .reply(200, { data: { ...deal } })
       .onGet('/dealFields')
@@ -49,8 +49,8 @@ describe('PipedriveEvent controller', () => {
             edit_flag: true,
             options: [
               {
-                label: payment_method,
-                id: payment_method_id,
+                label: paymentMethod,
+                id: paymentMethodId,
               },
             ],
           },
@@ -70,8 +70,8 @@ describe('PipedriveEvent controller', () => {
           formaspagamento: [
             {
               formapagamento: {
-                id: payment_method_id,
-                descricao: payment_method,
+                id: paymentMethodId,
+                descricao: paymentMethod,
               },
             },
           ],
@@ -126,7 +126,7 @@ describe('PipedriveEvent controller', () => {
         },
       ],
       parcels,
-      payment_method,
+      payment_method: paymentMethod,
       amount,
     });
   });

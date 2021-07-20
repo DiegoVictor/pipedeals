@@ -1,5 +1,5 @@
 import request from 'supertest';
-import Mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import faker from 'faker';
 
 import app from '../../../src/app';
@@ -12,7 +12,7 @@ describe('Session controller', () => {
   });
 
   afterAll(async () => {
-    await Mongoose.disconnect();
+    await mongoose.disconnect();
   });
 
   it('should be able to login', async () => {

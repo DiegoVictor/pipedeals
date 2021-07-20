@@ -1,10 +1,10 @@
-export default (page, pages_total, resource_url) => {
-  const url = `${resource_url}?page=`;
+export default (page, pagesTotal, resourceUrl) => {
+  const url = `${resourceUrl}?page=`;
   const links = {};
 
-  if (pages_total > 1) {
-    if (page < pages_total) {
-      links.last = url + pages_total;
+  if (pagesTotal > 1) {
+    if (page < pagesTotal) {
+      links.last = url + pagesTotal;
       links.next = url + (page + 1);
     }
 

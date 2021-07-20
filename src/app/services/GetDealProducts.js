@@ -1,14 +1,14 @@
 import { serverUnavailable } from '@hapi/boom';
 import axios from 'axios';
 
-import { pipedrive_api_url } from '../../config/pipedrive';
+import { pipedriveApiUrl } from '../../config/pipedrive';
 
 class GetDealProducts {
   async run({ id }) {
     try {
       const items = [];
       const { data: products } = await axios.get(
-        `${pipedrive_api_url}/deals/${id}/products`,
+        `${pipedriveApiUrl}/deals/${id}/products`,
         {
           params: { api_token: process.env.PIPEDRIVE_API_TOKEN },
         }

@@ -19,7 +19,7 @@ class ReportOpportunitiesController {
   }
 
   async index(req, res) {
-    const { host_url, current_url } = req;
+    const { hostUrl, currentUrl } = req;
     const { report_id } = req.params;
     const { page = 1 } = req.query;
     const limit = 10;
@@ -43,20 +43,20 @@ class ReportOpportunitiesController {
 
     const pages_total = Math.ceil(count / limit);
     if (pages_total > 1) {
-      res.links(paginationLinks(page, pages_total, current_url));
+      res.links(paginationLinks(page, pages_total, currentUrl));
     }
 
     return res.json(
       opportunities.map(opportunity => ({
         ...opportunity,
-        report_url: `${host_url}/v1/reports/${report_id}`,
-        url: `${current_url}/${opportunity._id}`,
+        report_url: `${hostUrl}/v1/reports/${report_id}`,
+        url: `${currentUrl}/${opportunity._id}`,
       }))
     );
   }
 
   async show(req, res) {
-    const { host_url, current_url } = req;
+    const { hostUrl, currentUrl } = req;
     const { report_id, id } = req.params;
 
     const opportunity = await Opportunity.findOne(
@@ -70,8 +70,8 @@ class ReportOpportunitiesController {
 
     return res.json({
       ...opportunity,
-      report_url: `${host_url}/v1/reports/${report_id}`,
-      url: current_url,
+      report_url: `${hostUrl}/v1/reports/${report_id}`,
+      url: currentUrl,
     });
   }
 }

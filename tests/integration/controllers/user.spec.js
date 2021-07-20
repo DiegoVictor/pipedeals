@@ -1,5 +1,5 @@
 import request from 'supertest';
-import Mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 import app from '../../../src/app';
 import User from '../../../src/app/models/User';
@@ -11,7 +11,7 @@ describe('User controller', () => {
   });
 
   afterAll(async () => {
-    await Mongoose.disconnect();
+    await mongoose.disconnect();
   });
 
   it('should be able to store a new user', async () => {

@@ -9,7 +9,7 @@ class ReportController {
   }
 
   async index(req, res) {
-    const { current_url } = req;
+    const { currentUrl } = req;
     const { page = 1 } = req.query;
     const limit = 10;
 
@@ -24,20 +24,20 @@ class ReportController {
 
     const pages_total = Math.ceil(count / limit);
     if (pages_total > 1) {
-      res.links(paginationLinks(page, pages_total, current_url));
+      res.links(paginationLinks(page, pages_total, currentUrl));
     }
 
     return res.json(
       reports.map(report => ({
         ...report,
-        url: `${current_url}/${report._id}`,
-        opportunities_url: `${current_url}/${report._id}/opportunities`,
+        url: `${currentUrl}/${report._id}`,
+        opportunities_url: `${currentUrl}/${report._id}/opportunities`,
       }))
     );
   }
 
   async show(req, res) {
-    const { current_url } = req;
+    const { currentUrl } = req;
     const { id } = req.params;
 
     const report = await Report.findById(
@@ -50,8 +50,8 @@ class ReportController {
 
     return res.json({
       ...report,
-      opportunities_url: `${current_url}/opportunities`,
-      url: current_url,
+      opportunities_url: `${currentUrl}/opportunities`,
+      url: currentUrl,
     });
   }
 }
