@@ -9,8 +9,8 @@ factory.define(
   'Deal',
   {},
   {
-    id: faker.random.number,
-    parcels: () => faker.random.number({ min: 2, max: 5 }),
+    id: faker.datatype.number,
+    parcels: () => faker.datatype.number({ min: 2, max: 5 }),
     supplier: faker.company.companyName,
     payment_method: faker.random.word,
     person_id: {
@@ -27,7 +27,7 @@ factory.define(
       formaspagamento: [
         {
           formapagamento: {
-            id: faker.random.number,
+            id: faker.datatype.number,
             codigoFiscal: faker.random.arrayElement([15, 3, 1]),
           },
         },
@@ -41,19 +41,19 @@ factory.define(
   {},
   {
     name: faker.commerce.productName,
-    quantity: () => faker.random.number({ min: 2, max: 5 }),
+    quantity: () => faker.datatype.number({ min: 2, max: 5 }),
     item_price: () =>
       Number(Math.floor(faker.finance.amount()) + Math.random()).toFixed(2),
   }
 );
 
 factory.define('Opportunity', Opportunity, () => {
-  const quantity = faker.random.number({ min: 2, max: 5 });
+  const quantity = faker.datatype.number({ min: 2, max: 5 });
   const unitary_value = faker.finance.amount();
 
   return {
     client: {
-      pipedrive_id: faker.random.number,
+      pipedrive_id: faker.datatype.number,
       name: faker.name.findName,
     },
     supplier: {
