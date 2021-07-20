@@ -5,10 +5,10 @@ import factory from '../../utils/factory';
 import CreateBlingBuyOrder from '../../../src/app/services/CreateBlingBuyOrder';
 import { axios } from '../../../mocks/axios';
 
-describe('CreateBlingBuyOrder service', () => {
+describe('CreateBlingBuyOrder', () => {
   it('should be able to get create a new opportunity with new payment method', async () => {
     const opportunity = await factory.attrs('Opportunity');
-    const id = faker.random.number();
+    const id = faker.datatype.number();
 
     process.env.BLING_API_KEY = faker.random.alphaNumeric(16);
 
@@ -19,7 +19,7 @@ describe('CreateBlingBuyOrder service', () => {
           formaspagamento: [
             {
               formapagamento: {
-                id: faker.random.number(),
+                id: faker.datatype.number(),
                 descricao: faker.random.word(),
               },
             },
@@ -35,7 +35,8 @@ describe('CreateBlingBuyOrder service', () => {
       .onPost('/pedidocompra/json')
       .reply(200);
 
-    await CreateBlingBuyOrder.run({ opportunity });
+    const createBlingBuyOrder = new CreateBlingBuyOrder();
+    await createBlingBuyOrder.run({ opportunity });
 
     expect(axios.sent['/pedidocompra/json']).toBe(
       `apikey=${process.env.BLING_API_KEY}&xml=${rawurlencode(
@@ -45,23 +46,23 @@ describe('CreateBlingBuyOrder service', () => {
             <nome>${opportunity.supplier.name}</nome>
           </fornecedor>
           <itens>
-          ${opportunity.items.map(item => {
-            return `<item>
+          ${opportunity.items.map(
+            (item) => `<item>
               <descricao>${item.description}</descricao>
               <qtde>${item.quantity}</qtde>
               <valor>${item.unitary_value}</valor>
-            </item>`;
-          })}
+            </item>`
+          )}
           </itens>
           <parcelas>
             ${opportunity.parcels
-              .map(parcel => {
-                return `<parcela>
+              .map(
+                (parcel) => `<parcela>
                 <nrodias>${parcel.payment_term_in_days}</nrodias>
                 <valor>${parcel.value}</valor>
                 <idformapagamento>${id}</idformapagamento>
-              </parcela>`;
-              })
+              </parcela>`
+              )
               .join('')}
           </parcelas>
         </pedidocompra>`.replace(/>\s+</gi, '><')
@@ -74,7 +75,8 @@ describe('CreateBlingBuyOrder service', () => {
 
     axios.onGet('/formaspagamento/json').reply(401, 'Unauthorized');
 
-    CreateBlingBuyOrder.run({ opportunity }).catch(err => {
+    const createBlingBuyOrder = new CreateBlingBuyOrder();
+    createBlingBuyOrder.run({ opportunity }).catch((err) => {
       expect({ ...err }).toStrictEqual({
         data: {
           code: 534,

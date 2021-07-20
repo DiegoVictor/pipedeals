@@ -2,18 +2,19 @@ import faker from 'faker';
 
 import GetDeal from '../../../src/app/services/GetDeal';
 import { axios } from '../../../mocks/axios';
-import { pipedrive_api_url } from '../../../src/config/pipedrive';
+import { pipedriveApiUrl } from '../../../src/config/pipedrive';
 
-describe('GetDeal service', () => {
+describe('GetDeal', () => {
   it('should be able to get Pipedrive response error', async () => {
-    const id = faker.random.number();
+    const id = faker.datatype.number();
 
     axios
-      .setBaseUrl(pipedrive_api_url)
+      .setBaseUrl(pipedriveApiUrl)
       .onGet(`/deals/${id}`)
       .reply(401, 'Unauthorized');
 
-    GetDeal.run({ id }).catch(err => {
+    const getDeal = new GetDeal();
+    getDeal.run({ id }).catch((err) => {
       expect({ ...err }).toStrictEqual({
         data: {
           code: 531,

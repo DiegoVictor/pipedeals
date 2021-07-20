@@ -6,7 +6,7 @@ import app from '../../../src/app';
 import User from '../../../src/app/models/User';
 import factory from '../../utils/factory';
 
-describe('Session controller', () => {
+describe('Session', () => {
   beforeEach(async () => {
     await User.deleteMany();
   });

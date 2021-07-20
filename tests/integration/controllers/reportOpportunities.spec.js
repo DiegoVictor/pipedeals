@@ -1,5 +1,5 @@
 import request from 'supertest';
-import Mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 import app from '../../../src/app';
 import Opportunity from '../../../src/app/models/Opportunity';
@@ -8,7 +8,7 @@ import User from '../../../src/app/models/User';
 import factory from '../../utils/factory';
 import jwtoken from '../../utils/jwtoken';
 
-describe('Report controller', () => {
+describe('ReportOpportunities', () => {
   const url = `http://127.0.0.1:${process.env.APP_PORT}/v1`;
 
   beforeEach(async () => {
@@ -18,7 +18,7 @@ describe('Report controller', () => {
   });
 
   afterAll(async () => {
-    await Mongoose.disconnect();
+    await mongoose.disconnect();
   });
 
   it('should be able to get a list of opportunities', async () => {

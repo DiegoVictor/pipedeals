@@ -7,7 +7,7 @@ import Report from '../../../src/app/models/Report';
 import factory from '../../utils/factory';
 import jwtoken from '../../utils/jwtoken';
 
-describe('Report controller', () => {
+describe('Report', () => {
   const url = `http://127.0.0.1:${process.env.APP_PORT}/v1`;
 
   beforeEach(async () => {
