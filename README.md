@@ -8,14 +8,13 @@
 [![coverage](https://img.shields.io/codecov/c/gh/DiegoVictor/pipedeals?logo=codecov&style=flat-square)](https://codecov.io/gh/DiegoVictor/pipedeals)
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/DiegoVictor/pipedeals/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Pipedeals&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fpipedeals%2Fmaster%2FInsomnia_2020-04-25.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Pipedeals&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fpipedeals%2Fmaster%2FInsomnia_2021-07-19.json)
 
 The main purpose of Pipedeals is listen to [Pipedrive](https://www.pipedrive.com) deal's `won` update event, prepare buy order data, save it on a database and finally send it to [Bling](https://www.bling.com.br)'s API. Also expose two resources, `opportunities` that are buy orders sent to Bling and `reports` that aggregates opportunities by day and amount (sum of products' prices in that day).
 
 # Table of Contents
 * [Installing](#installing)
   * [Configuring](#configuring)
-    * [Redis](#redis)
     * [MongoDB](#mongodb)
     * [.env](#env)
     * [Pipedrive](#pipedrive)
@@ -24,7 +23,6 @@ The main purpose of Pipedeals is listen to [Pipedrive](https://www.pipedrive.com
       * [Product](#product)
     * [Bling's API Key](#blings-api-key)
       * [Permissions](#permissions)
-    * [Brute Force (Optional)](#brute-force-optional)
 * [Usage](#usage)
   * [Error Handling](#error-handling)
     * [Errors Reference](#errors-reference)
@@ -50,18 +48,15 @@ $ npm install
 > Was installed and configured the [`eslint`](https://eslint.org) and [`prettier`](https://prettier.io) to keep the code clean and patterned.
 
 ## Configuring
-The application use two databases: [MongoDB](https://www.mongodb.com) and [Redis](https://redis.io). For the fastest setup is recommended to use [docker](https://www.docker.com), see below how to setup ever database.
+The application uses just one database: [MongoDB](https://www.mongodb.com). For the fastest setup is recommended to use [docker-compose](https://docs.docker.com/compose/), you just need to up all services:
+```
+$ docker-compose up -d
+```
 
 ### MongoDB
-Store opportunities sent to Bling, reports and the users utilized by application. You can create a MongoDB container like so:
+Store opportunities sent to Bling, reports and the users utilized by application. If for any reason you would like to create a MongoDB container instead of use `docker-compose`, you can do it by running the following command:
 ```
 $ docker run --name pipedeals-mongo -d -p 27017:27017 mongo
-```
-
-### Redis
-Responsible for store data utilized by rate limit and brute force prevention middlewares. To create a redis container:
-```
-$ docker run --name pipedeals-redis -d -p 6379:6379 redis:alpine
 ```
 
 ### .env
@@ -73,15 +68,12 @@ In this file you may configure your MongoDB and Redis database connection, JWT s
 |NODE_ENV|App environment.|`development`
 |JWT_SECRET|An alphanumeric random string. Used to create signed tokens.| -
 |JWT_EXPIRATION_TIME|How long time will be the token valid. See [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken#usage) repo for more information.|`7d`
-|MONGO_URL|MongoDB's server url.|`mongodb://127.0.0.1:27017/pipedeals`
-|REDIS_HOST|Redis host.|`127.0.0.1`
-|REDIS_PORT|Redis port.|`6379`
+|MONGO_URL|MongoDB's server url.|`mongodb://mongo:27017/pipedeals`
 |PIPEDRIVE_API_TOKEN|Pipedrive API's token. See [How to find the API token](https://pipedrive.readme.io/docs/how-to-find-the-api-token) for more information.| -
 |PIPEDRIVE_DOMAIN_NAME|Pipedrive domain name (company name), see [How to get the company domain](https://pipedrive.readme.io/docs/how-to-get-the-company-domain).| -
 |PIPEDRIVE_USER and PIPEDRIVE_PWD|Basic auth's user and password (respectively). Used to ensure that the deal's event is coming from Pipedrive webhook, see [Webhook](#webhook) for more information about it.| -
 |BLING_API_KEY|Bling's api key. See [Bling's API key](#blings-api-key) section.| -
 |DOCS_URL|An url to docs where users can find more information about the app's internal code errors.|`https://github.com/DiegoVictor/pipedeals#errors-reference`
-> For Windows users using Docker Toolbox maybe be necessary in your `.env` file set the host of the MongoDB and Redis to `192.168.99.100` (docker machine IP) instead of `localhost` or `127.0.0.1`.
 
 ### Pipedrive
 Instructions to configure the Pipedrive's webhook, custom fields and products.
@@ -146,12 +138,6 @@ The following permissions are necessary to the API user:
 
 ![permissions buy order](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/permissions_buy_order.png)<br>
 ![permissions sales](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/permissions_sales.png)
-
-## Brute Force (Optional)
-The project comes pre-configured, but you can adjust it as your needs.
-
-* `src/config/bruteforce.js`
-> `rate-limiter-flexible` was also used to configure brute force prevention, but with a different method of configuration that you can see in [ExpressBrute migration](https://github.com/animir/node-rate-limiter-flexible/wiki/ExpressBrute-migration#options).
 
 # Usage
 To start up the app run:
