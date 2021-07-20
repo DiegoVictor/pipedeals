@@ -12,16 +12,23 @@ class PipedriveEventController {
     switch (event) {
       case 'updated.deal': {
         if (current.status === 'won') {
-          const deal = await UpdateDealFieldsName.run({
-            data: await GetDeal.run({ id: current.id }),
+          const updateDealFieldsName = new UpdateDealFieldsName();
+          const getDeal = new GetDeal();
+
+          const deal = await updateDealFieldsName.run({
+            data: await getDeal.run({ id: current.id }),
           });
-          const items = await GetDealProducts.run({ id: deal.id });
+
+          const getDealProducts = new GetDealProducts();
+          const items = await getDealProducts.run({ id: deal.id });
           const amount = items.reduce(
             (sum, item) => item.unitary_value * item.quantity + sum,
             0
           );
 
-          await CreateBlingBuyOrder.run({
+          const calculateParcels = new CalculateParcels();
+          const createBlingBuyOrder = new CreateBlingBuyOrder();
+          await createBlingBuyOrder.run({
             opportunity: await Opportunity.create({
               amount,
               supplier: {
@@ -32,7 +39,7 @@ class PipedriveEventController {
                 name: deal.person_id.name,
               },
               payment_method: deal.payment_method,
-              parcels: CalculateParcels.run({
+              parcels: calculateParcels.run({
                 amount,
                 parcels_count: deal.parcels,
               }),

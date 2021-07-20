@@ -30,4 +30,4 @@ class CalculateParcels {
   }
 }
 
-export default new CalculateParcels();
+export default CalculateParcels;

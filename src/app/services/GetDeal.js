@@ -28,4 +28,4 @@ class GetDeal {
   }
 }
 
-export default new GetDeal();
+export default GetDeal;

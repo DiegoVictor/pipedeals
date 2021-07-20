@@ -86,4 +86,4 @@ class CreateBlingBuyOrder {
   }
 }
 
-export default new CreateBlingBuyOrder();
+export default CreateBlingBuyOrder;

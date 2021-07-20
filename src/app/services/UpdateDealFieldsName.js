@@ -45,4 +45,4 @@ class UpdateDealFieldsName {
   }
 }
 
-export default new UpdateDealFieldsName();
+export default UpdateDealFieldsName;
