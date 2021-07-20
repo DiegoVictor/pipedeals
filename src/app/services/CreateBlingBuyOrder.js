@@ -49,23 +49,23 @@ class CreateBlingBuyOrder {
               <nome>${opportunity.supplier.name}</nome>
             </fornecedor>
             <itens>
-            ${opportunity.items.map(item => {
-              return `<item>
+            ${opportunity.items.map(
+              (item) => `<item>
                 <descricao>${item.description}</descricao>
                 <qtde>${item.quantity}</qtde>
                 <valor>${item.unitary_value}</valor>
-              </item>`;
-            })}
+              </item>`
+            )}
             </itens>
             <parcelas>
               ${opportunity.parcels
-                .map(parcel => {
-                  return `<parcela>
+                .map(
+                  (parcel) => `<parcela>
                   <nrodias>${parcel.payment_term_in_days}</nrodias>
                   <valor>${parcel.value}</valor>
                   <idformapagamento>${payment_method}</idformapagamento>
-                </parcela>`;
-                })
+                </parcela>`
+                )
                 .join('')}
             </parcelas>
           </pedidocompra>`.replace(/>\s+</gi, '><')

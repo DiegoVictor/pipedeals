@@ -15,13 +15,13 @@ class UpdateDealFieldsName {
       );
 
       fields.data
-        .filter(field => field.edit_flag)
-        .forEach(field => {
+        .filter((field) => field.edit_flag)
+        .forEach((field) => {
           if (typeof deal[field.key] !== 'undefined') {
             let value = deal[field.key];
             if (field.field_type === 'enum') {
               value = field.options.find(
-                option => option.id === parseInt(deal[field.key], 10)
+                (option) => option.id === parseInt(deal[field.key], 10)
               ).label;
             }
             delete deal[field.key];

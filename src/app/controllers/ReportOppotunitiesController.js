@@ -47,7 +47,7 @@ class ReportOpportunitiesController {
     }
 
     return res.json(
-      opportunities.map(opportunity => ({
+      opportunities.map((opportunity) => ({
         ...opportunity,
         report_url: `${hostUrl}/v1/reports/${report_id}`,
         url: `${currentUrl}/${opportunity._id}`,
