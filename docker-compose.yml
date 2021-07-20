@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - app_network
+  app:
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - 3333:3333
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - app_network
+volumes:
+  mongodata:
+    driver: local
+networks:
+  app_network:
+    driver: bridge
