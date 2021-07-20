@@ -76,4 +76,4 @@ class ReportOpportunitiesController {
   }
 }
 
-export default new ReportOpportunitiesController();
+export default ReportOpportunitiesController;

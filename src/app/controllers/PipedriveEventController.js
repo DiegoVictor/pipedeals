@@ -57,4 +57,4 @@ class PipedriveEventController {
   }
 }
 
-export default new PipedriveEventController();
+export default PipedriveEventController;
