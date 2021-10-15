@@ -7,7 +7,7 @@
 [![coverage](https://img.shields.io/codecov/c/gh/DiegoVictor/pipedeals?logo=codecov&style=flat-square)](https://codecov.io/gh/DiegoVictor/pipedeals)
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/DiegoVictor/pipedeals/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Pipedeals&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fpipedeals%2Fmaster%2FInsomnia_2021-07-19.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Pipedeals&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fpipedeals%2Fmaster%2FInsomnia_2021-09-06.json)
 
 The main purpose of Pipedeals is listen to [Pipedrive](https://www.pipedrive.com) deal's `won` update event, prepare buy order data, save it on a database and finally send it to [Bling](https://www.bling.com.br)'s API. Also expose two resources, `opportunities` that are buy orders sent to Bling and `reports` that aggregates opportunities by day and amount (sum of products' prices in that day).
 
@@ -172,7 +172,6 @@ Instead of only throw a simple message and HTTP Status Code this API return frie
 |533|An error occurred while trying to retrieve the deal's products from Pipedrive|Occurred an error while trying to retrieve deal's products, in `details` key will be more information about the error.
 |534|An error occurred while trying to save the order at Bling|Something goes wrong when tried to send the opportunity to Bling. There are two steps here: payment method verification and buy order creation. For more information see the `details` key in the response.
 |244|Report not found|The `id` sent not references an existing report in the database.
-|340|Report not found|The `report_id` sent not references an existing report in the database.
 |344|Opportunity not found|The `id` sent not references an existing opportunity in the database.
 |440|User not exists|The `email` sent not references an existing user in the database.
 |450|User and/or password not match|User and/or password is incorrect.
@@ -225,7 +224,7 @@ GET http://localhost:3333/v1/reports
 |`/pipedrive/events`|POST|:x:|Body with event's `event`, `current.id` and `current.status`.|Receive Piedrive deal's won event.|Basic
 |`/reports`|GET|:heavy_check_mark:|`page` query parameter.|List reports.|Bearer
 |`/reports/:id`|GET|:x:|`:id` of the report.|Return one report.|Bearer
-|`/reports/:report_id/opportunities`|GET|:heavy_check_mark:|`:report_id` of the report and `page` query parameter.|List report's opportunities.|Bearer
+|`/reports/:id/opportunities`|GET|:heavy_check_mark:|`:id` of the report and `page` query parameter.|List report's opportunities.|Bearer
 |`/reports/:report_id/opportunities/:id`|GET|:x:|`:report_id` of the report and `:id` of the opportunity.|Return one report's opportunity.|Bearer
 
 > Routes with `Bearer` as auth method expect an `Authorization` header. See [Bearer Token](#bearer-token) section for more information. `Basic` authentication is a base64 encoding of `PIPEDRIVE_USER` and `PIPEDRIVE_PWD` joined by a `:`, but you should not make manual requests to this endpoint (this will be responsability of the Pipedrive's [webhook](#webhook)).
