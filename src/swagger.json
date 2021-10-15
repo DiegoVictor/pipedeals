@@ -14,6 +14,103 @@
     }
   ],
   "paths": {
+    "/sessions": {
+      "post": {
+        "tags": ["Sessions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "User",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "johndoe@example.com",
+                "password": "123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user":  {
+                      "type": "object",
+                      "title": "User",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "user": {
+                    "_id": "6136a0d0dee6d726c8592507",
+                    "email": "johndoe@example.com"
+                  },
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzZhMGQwZGVlNmQ3MjZjODU5MjUwNyIsImlhdCI6MTYzMDk3MDE4MiwiZXhwIjoxNjMxNTc0OTgyfQ.kSks24HR_FtCu2CuvEi22YgsoXf5Ko4eZLBhMa0ULWg"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error while logging in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "User not exists": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Bad Request",
+                      "message": "User not exists",
+                      "code": 440,
+                      "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                    }
+                  },
+                  "User and/or password not match": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Bad Request",
+                      "message": "User and/or password not match",
+                      "code": 450,
+                      "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
