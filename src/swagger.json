@@ -111,6 +111,59 @@
         }
       }
     },
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "User",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "johndoe@example.com",
+                "password": "123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Create new users"
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "statusCode": 400,
+                  "error": "Bad Request",
+                  "message": "Email already in use",
+                  "code": 140,
+                  "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
