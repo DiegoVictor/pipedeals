@@ -164,6 +164,137 @@
         }
       }
     },
+    "/pipedrive/events": {
+      "post": {
+        "tags": ["Events"],
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Event",
+                "required": [
+                  "event",
+                  "current"
+                ],
+                "properties": {
+                  "event": {
+                    "type": "string"
+                  },
+                  "current": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "example": {
+                "event": "updated.deal",
+                "current": {
+                  "id": 1,
+                  "status": "won"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Receive Piedrive deal's won event",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Any error while tring to process opportunity",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "An error occurred while trying to retrieve the deal from Pipedrive": {
+                    "value": {
+                      "statusCode": 503,
+                      "error": "Service Unavailable",
+                      "message": "An error occurred while trying to retrieve the deal from Pipedrive",
+                      "code": 531,
+                      "details": {
+                        "status": 401,
+                        "statusText": "Unauthorized"
+                      },
+                      "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                    }
+                  },
+                  "An error occurred while trying to retrieve the deal's custom fields from Pipedrive": {
+                    "value": {
+                      "statusCode": 503,
+                      "error": "Service Unavailable",
+                      "message": "An error occurred while trying to retrieve the deal's custom fields from Pipedrive",
+                      "code": 532,
+                      "details": {
+                        "status": 401,
+                        "statusText": "Unauthorized"
+                      },
+                      "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                    }
+                  },
+                  "An error occurred while trying to retrieve the deal's products from Pipedrive": {
+                    "value": {
+                      "statusCode": 503,
+                      "error": "Service Unavailable",
+                      "message": "An error occurred while trying to retrieve the deal's products from Pipedrive",
+                      "code": 533,
+                      "details": {
+                        "status": 401,
+                        "statusText": "Unauthorized"
+                      },
+                      "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                    }
+                  },
+                  "An error occurred while trying to save the order at Bling": {
+                    "value": {
+                      "statusCode": 503,
+                      "error": "Service Unavailable",
+                      "message": "An error occurred while trying to save the order at Bling",
+                      "code": 534,
+                      "details": {
+                        "status": 401,
+                        "statusText": "Unauthorized"
+                      },
+                      "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
