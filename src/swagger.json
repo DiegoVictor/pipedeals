@@ -295,6 +295,65 @@
         }
       }
     },
+    "/reports": {
+      "get": {
+        "tags": ["Reports"],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List reports",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Report"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "6136b3a37e1a5b5e60ba3950",
+                    "amount": 12.37,
+                    "date": "2021-09-07T00:34:43.759Z",
+                    "url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950",
+                    "opportunities_url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950/opportunities"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total number of registries in the database",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Link": {
+                "description": "Next, Previous, First and Last page's urls",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
