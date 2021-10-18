@@ -354,6 +354,63 @@
         }
       }
     },
+    "/reports/{id}": {
+      "get": {
+        "tags": ["Reports"],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6136b3a37e1a5b5e60ba3950"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return one report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Report"
+                },
+                "example": {
+                  "_id": "6136b3a37e1a5b5e60ba3950",
+                  "amount": 12.37,
+                  "date": "2021-09-07T00:34:43.759Z",
+                  "opportunities_url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950/opportunities",
+                  "url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Report not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "statusCode": 404,
+                  "error": "Not Found",
+                  "message": "Report not found",
+                  "code": 244,
+                  "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
