@@ -146,14 +146,14 @@ describe('ReportOpportunities', () => {
     const response = await request(app)
       .get(`/v1/reports/${report._id}/opportunities`)
       .set('Authorization', `Bearer ${token}`)
-      .expect(400)
+      .expect(404)
       .send();
 
     expect(response.body).toStrictEqual({
-      statusCode: 400,
-      error: 'Bad Request',
+      statusCode: 404,
+      error: 'Not Found',
       message: 'Report not found',
-      code: 340,
+      code: 244,
       docs: process.env.DOCS_URL,
     });
   });

@@ -26,7 +26,7 @@ class ReportOpportunitiesController {
 
     const report = await Report.findById(report_id);
     if (!report) {
-      throw badRequest('Report not found', { code: 340 });
+      throw notFound('Report not found', { code: 244 });
     }
 
     const opportunities = await Opportunity.find(
