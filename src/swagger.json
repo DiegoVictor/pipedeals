@@ -433,6 +433,73 @@
           }
         }
       },
+      "Opportunity": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "supplier": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "client": {
+            "type": "object",
+            "properties": {
+              "pipedrive_id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "payment_method": {
+            "type": "string"
+          },
+          "parcels": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "payment_term_in_days": {
+                  "type": "integer"
+                },
+                "value": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "quantity": {
+                  "type": "integer"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "unitary_value": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "report_url": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
       "Error": {
         "properties": {
           "statusCode": {
