@@ -39,7 +39,7 @@ describe('ReportOpportunities', () => {
 
     expect(response.body.length).toBeLessThanOrEqual(30);
 
-    opportunities.forEach(opportunity => {
+    opportunities.forEach((opportunity) => {
       expect(response.body).toContainEqual({
         _id: opportunity._id.toString(),
         amount: opportunity.amount,
@@ -101,7 +101,7 @@ describe('ReportOpportunities', () => {
       return 1;
     });
 
-    opportunities.slice(-10).forEach(opportunity => {
+    opportunities.slice(-10).forEach((opportunity) => {
       expect(response.body).toContainEqual({
         _id: opportunity._id.toString(),
         amount: opportunity.amount,
