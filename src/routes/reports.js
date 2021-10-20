@@ -15,9 +15,9 @@ app.get('/', PageValidator, reportController.index);
 app.get('/:id', IdValidator, reportController.show);
 
 app.get(
-  '/:report_id/opportunities',
+  '/:id/opportunities',
   PageValidator,
-  ReportIdValidator,
+  IdValidator,
   reportOppotunitiesController.index
 );
 app.get(
