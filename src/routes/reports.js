@@ -4,8 +4,7 @@ import ReportController from '../app/controllers/ReportController';
 import ReportOppotunitiesController from '../app/controllers/ReportOppotunitiesController';
 import PageValidator from '../app/validators/PageValidator';
 import IdValidator from '../app/validators/IdValidator';
-import ReportIdValidator from '../app/validators/ReportIdValidator';
-import IdAndReportIdValidator from '../app/validators/IdAndReportIdValidator';
+import IdAndOpportunityIdValidator from '../app/validators/IdAndOpportunityIdValidator';
 
 const app = Router();
 
@@ -22,8 +21,8 @@ app.get(
   reportOppotunitiesController.index
 );
 app.get(
-  '/:report_id/opportunities/:id',
-  IdAndReportIdValidator,
+  '/:id/opportunities/:opportunity_id',
+  IdAndOpportunityIdValidator,
   reportOppotunitiesController.show
 );
 
