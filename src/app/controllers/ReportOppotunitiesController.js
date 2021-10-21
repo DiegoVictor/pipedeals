@@ -1,4 +1,4 @@
-import { badRequest, notFound } from '@hapi/boom';
+import { notFound } from '@hapi/boom';
 
 import Opportunity from '../models/Opportunity';
 import Report from '../models/Report';
@@ -20,17 +20,17 @@ class ReportOpportunitiesController {
 
   async index(req, res) {
     const { hostUrl, currentUrl } = req;
-    const { report_id } = req.params;
+    const { id } = req.params;
     const { page = 1 } = req.query;
     const limit = 10;
 
-    const report = await Report.findById(report_id);
+    const report = await Report.findById(id);
     if (!report) {
       throw notFound('Report not found', { code: 244 });
     }
 
     const opportunities = await Opportunity.find(
-      { report_id },
+      { report_id: id },
       ReportOpportunitiesController.projection
     )
       .lean()
@@ -38,7 +38,7 @@ class ReportOpportunitiesController {
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const count = await Opportunity.where({ report_id }).countDocuments();
+    const count = await Opportunity.where({ report_id: id }).countDocuments();
     res.header('X-Total-Count', count);
 
     const pages_total = Math.ceil(count / limit);
@@ -49,7 +49,7 @@ class ReportOpportunitiesController {
     return res.json(
       opportunities.map((opportunity) => ({
         ...opportunity,
-        report_url: `${hostUrl}/v1/reports/${report_id}`,
+        report_url: `${hostUrl}/v1/reports/${id}`,
         url: `${currentUrl}/${opportunity._id}`,
       }))
     );
@@ -57,10 +57,10 @@ class ReportOpportunitiesController {
 
   async show(req, res) {
     const { hostUrl, currentUrl } = req;
-    const { report_id, id } = req.params;
+    const { id, opportunity_id } = req.params;
 
     const opportunity = await Opportunity.findOne(
-      { _id: id, report_id },
+      { _id: opportunity_id, report_id: id },
       ReportOpportunitiesController.projection
     ).lean();
 
@@ -70,7 +70,7 @@ class ReportOpportunitiesController {
 
     return res.json({
       ...opportunity,
-      report_url: `${hostUrl}/v1/reports/${report_id}`,
+      report_url: `${hostUrl}/v1/reports/${id}`,
       url: currentUrl,
     });
   }
