@@ -25,7 +25,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.5",
     "rawurlencode": "^1.0.2",
-    "slugify": "^1.4.0"
+    "slugify": "^1.4.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "@sucrase/jest-plugin": "^2.0.0",
