@@ -411,6 +411,111 @@
         }
       }
     },
+    "/reports/{id}/opportunities": {
+      "get": {
+        "tags": ["Reports"],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6136b3a37e1a5b5e60ba3950"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List report's opportunities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Opportunity"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "6136b3a37e1a5b5e60ba394a",
+                    "amount": 12.37,
+                    "supplier": {
+                      "name": "Supplier X"
+                    },
+                    "client": {
+                      "pipedrive_id": 1,
+                      "name": "John Doe"
+                    },
+                    "payment_method": "Cash",
+                    "parcels": [
+                      {
+                        "payment_term_in_days": 30,
+                        "value": 12.37
+                      }
+                    ],
+                    "items": [
+                      {
+                        "quantity": 1,
+                        "description": "Product A",
+                        "unitary_value": 12.37
+                      }
+                    ],
+                    "report_url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950",
+                    "url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950/opportunities/6136b3a37e1a5b5e60ba394a"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total number of registries in the database",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Link": {
+                "description": "Next, Previous, First and Last page's urls",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Report not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "statusCode": 404,
+                  "error": "Not Found",
+                  "message": "Report not found",
+                  "code": 244,
+                  "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
