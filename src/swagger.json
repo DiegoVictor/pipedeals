@@ -516,6 +516,92 @@
         }
       }
     },
+    "/reports/{id}/opportunities/{opportunity_id}": {
+      "get": {
+        "tags": ["Reports"],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6136b3a37e1a5b5e60ba3950"
+          },
+          {
+            "in": "path",
+            "name": "opportunity_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6136b3a37e1a5b5e60ba394a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return one report's opportunity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Opportunity"
+                },
+                "example": {
+                  "_id": "6136b3a37e1a5b5e60ba394a",
+                  "amount": 12.37,
+                  "supplier": {
+                    "name": "Supplier X"
+                  },
+                  "client": {
+                    "pipedrive_id": 1,
+                    "name": "John Doe"
+                  },
+                  "payment_method": "Cash",
+                  "parcels": [
+                    {
+                      "payment_term_in_days": 30,
+                      "value": 12.37
+                    }
+                  ],
+                  "items": [
+                    {
+                      "quantity": 1,
+                      "description": "Product A",
+                      "unitary_value": 12.37
+                    }
+                  ],
+                  "report_url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950",
+                  "url": "http://localhost:3333/v1/reports/6136b3a37e1a5b5e60ba3950/opportunities/6136b3a37e1a5b5e60ba394a"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Opportunity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "statusCode": 404,
+                  "error": "Not Found",
+                  "message": "Opportunity not found",
+                  "code": 344,
+                  "docs": "https://github.com/DiegoVictor/pipedeals#errors-reference"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "components": {
     "schemas": {
