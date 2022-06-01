@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 import jwt from 'jsonwebtoken';
 
 import bearerAuth from '../../../src/app/middlewares/bearerAuth';
@@ -6,12 +6,12 @@ import bearerAuth from '../../../src/app/middlewares/bearerAuth';
 describe('bearerAuth', () => {
   const res = {
     status: jest.fn(() => res),
-    json: jest.fn(response => response),
+    json: jest.fn((response) => response),
   };
 
   it('should not be able to request without a token', () => {
     const req = { headers: {} };
-    bearerAuth(req, res, jest.fn()).catch(err => {
+    bearerAuth(req, res, jest.fn()).catch((err) => {
       expect({ ...err }).toStrictEqual({
         data: { code: 740 },
         isBoom: true,
@@ -43,7 +43,7 @@ describe('bearerAuth', () => {
     };
 
     const message = 'Token expired or invalid';
-    bearerAuth(req, res, jest.fn()).catch(err => {
+    bearerAuth(req, res, jest.fn()).catch((err) => {
       expect({ ...err }).toStrictEqual({
         data: null,
         isBoom: true,

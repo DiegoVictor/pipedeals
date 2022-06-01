@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import UpdateDealFieldsName from '../../../src/app/services/UpdateDealFieldsName';
 import { axios } from '../../../mocks/axios';

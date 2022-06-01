@@ -1,7 +1,7 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import btoa from 'btoa';
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import app from '../../../src/app';
 import Report from '../../../src/app/models/Report';

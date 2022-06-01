@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import GetDeal from '../../../src/app/services/GetDeal';
 import { axios } from '../../../mocks/axios';

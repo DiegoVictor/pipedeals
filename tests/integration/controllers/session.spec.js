@@ -1,6 +1,6 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import app from '../../../src/app';
 import User from '../../../src/app/models/User';

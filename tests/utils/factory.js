@@ -1,5 +1,5 @@
 import factory from 'factory-girl';
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import Report from '../../src/app/models/Report';
 import User from '../../src/app/models/User';
@@ -28,7 +28,7 @@ factory.define(
         {
           formapagamento: {
             id: faker.datatype.number,
-            codigoFiscal: faker.random.arrayElement([15, 3, 1]),
+            codigoFiscal: faker.helpers.arrayElement([15, 3, 1]),
           },
         },
       ],

@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 import jwt from 'jsonwebtoken';
 
 import basicAuth from '../../../src/app/middlewares/basicAuth';
@@ -6,7 +6,7 @@ import basicAuth from '../../../src/app/middlewares/basicAuth';
 describe('basicAuth', () => {
   const res = {
     status: jest.fn(() => res),
-    json: jest.fn(response => response),
+    json: jest.fn((response) => response),
   };
 
   it('should not be able to request without a token', async () => {
