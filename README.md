@@ -1,5 +1,5 @@
 # Pipedeals
-[![Travis (.org)](https://img.shields.io/travis/DiegoVictor/pipedeals?logo=travis&style=flat-square)](https://travis-ci.org/DiegoVictor/pipedeals)
+[![Travis](https://img.shields.io/travis/com/DiegoVictor/pipedeals?logo=travis&style=flat-square)](https://travis-ci.org/DiegoVictor/pipedeals)
 [![nodemon](https://img.shields.io/badge/nodemon-2.0.12-76d04b?style=flat-square&logo=nodemon)](https://nodemon.io/)
 [![eslint](https://img.shields.io/badge/eslint-7.31.0-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
 [![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
