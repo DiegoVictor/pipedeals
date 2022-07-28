@@ -87,7 +87,7 @@ https://<your-domain>/v1/pipedrive/events
 ```
 > If you are running the application local I recommend you to use [ngrok](https://ngrok.com) to export a url to access the application. (e.g. `https://25752eff.ngrok.io/v1/pipedrive/events`)
 
-![webhook](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/webhook.png)
+![webhook](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/webhook.png)
 
 #### Custom Fields
 Bling make some fields mandatory, they are: [`Payment Method`](#payment-method) and [`Supplier`](#supplier), this application makes [`Parcels`](#parcels) mandatory too. To create custom fields to deal on Pipedrive see [Adding Custom Fields](https://support.pipedrive.com/hc/en-us/articles/207228075-Custom-Fields#C1).
@@ -97,27 +97,27 @@ Bling make some fields mandatory, they are: [`Payment Method`](#payment-method) 
 ##### Parcels
 Just create a field named Parcels, must be a number.
 
-![parcels](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/parcels.png)
+![parcels](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/parcels.png)
 
 ##### Supplier
 Supplier, must be free text field.
 
-![supplier](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/supplier.png)
+![supplier](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/supplier.png)
 
 ##### Payment Method
 Payment Method, must be unique option field.
 
-![payment method](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/payment_method.png)
+![payment method](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/payment_method.png)
 > Payments methods that not exists in Bling will be created before the opportunity be sent to it.
 
 #### Product
 Also you need to create a product and attach to deal, fill only the mandatory fields is enough (`Product name` and `Unit price`). For more information see [Adding New Products](https://support.pipedrive.com/hc/en-us/articles/206759569-Products#C2).
 
-![create product](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/create_product.png)
+![create product](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/create_product.png)
 
 Remember to link the product to deals, see how to do it in this article [How can I link products to a deal?](https://support.pipedrive.com/hc/en-us/articles/115001109169-How-can-I-link-products-to-a-deal-).
 
-![add deal product](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/add_deal_product.png)
+![add deal product](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/add_deal_product.png)
 
 ### Bling's API Key
 To get a Bling's API key, go to user list:
@@ -125,7 +125,7 @@ To get a Bling's API key, go to user list:
 
 Then create a new user, select `USUÁRIO API`, copy the `API key` (maybe be necessary click on `GERAR`), [configure the permissions](#permissions), save the user, paste the `API key` in the `BLING_API_KEY` key in the `.env` file.
 
-![Bling user](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/bling_user.png)
+![Bling user](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/bling_user.png)
 
 #### Permissions
 The following permissions are necessary to the API user:
@@ -135,8 +135,8 @@ The following permissions are necessary to the API user:
 |`Contas Contábeis`, `Notas Fiscais`, `NFCe` and `Pedidos de Venda`|Vendas|Enable just one is enough. Allow to get lists and create payment methods.
 |`Pedidos de Compra`|Suprimentos|Allow to create new buy orders.
 
-![permissions buy order](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/permissions_buy_order.png)<br>
-![permissions sales](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/permissions_sales.png)
+![permissions buy order](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/permissions_buy_order.png)<br>
+![permissions sales](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/permissions_sales.png)
 
 # Usage
 To start up the app run:
