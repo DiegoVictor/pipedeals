@@ -5,9 +5,9 @@
 [![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
 [![jest](https://img.shields.io/badge/jest-26.6.3-brightgreen?style=flat-square&logo=jest)](https://jestjs.io/)
 [![coverage](https://img.shields.io/codecov/c/gh/DiegoVictor/pipedeals?logo=codecov&style=flat-square)](https://codecov.io/gh/DiegoVictor/pipedeals)
-[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/DiegoVictor/pipedeals/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/DiegoVictor/pipedeals/blob/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Pipedeals&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fpipedeals%2Fmaster%2FInsomnia_2021-09-06.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Pipedeals&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fpipedeals%2Fmain%2FInsomnia_2021-09-06.json)
 
 The main purpose of Pipedeals is listen to [Pipedrive](https://www.pipedrive.com) deal's `won` update event, prepare buy order data, save it on a database and finally send it to [Bling](https://www.bling.com.br)'s API. Also expose two resources, `opportunities` that are buy orders sent to Bling and `reports` that aggregates opportunities by day and amount (sum of products' prices in that day).
 
