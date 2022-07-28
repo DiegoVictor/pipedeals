@@ -92,7 +92,7 @@ https://<your-domain>/v1/pipedrive/events
 #### Custom Fields
 Bling make some fields mandatory, they are: [`Payment Method`](#payment-method) and [`Supplier`](#supplier), this application makes [`Parcels`](#parcels) mandatory too. To create custom fields to deal on Pipedrive see [Adding Custom Fields](https://support.pipedrive.com/hc/en-us/articles/207228075-Custom-Fields#C1).
 
-![custom fields](https://raw.githubusercontent.com/DiegoVictor/pipedeals/master/screenshots/custom_fields.png)
+![custom fields](https://raw.githubusercontent.com/DiegoVictor/pipedeals/main/screenshots/custom_fields.png)
 
 ##### Parcels
 Just create a field named Parcels, must be a number.
