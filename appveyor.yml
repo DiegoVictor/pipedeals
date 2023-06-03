@@ -4,6 +4,8 @@ environment:
   APP_PORT: 3333
   JWT_SECRET: testing
   JWT_EXPIRATION_TIME: 7d
+  PIPEDRIVE_USER: pipedrive
+  PIPEDRIVE_PWD: testing
   DOCS_URL: https://github.com/DiegoVictor/pipedeals#errors-reference
 install:
   - sh: npm ci
