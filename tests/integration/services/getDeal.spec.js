@@ -6,7 +6,7 @@ import { pipedriveApiUrl } from '../../../src/config/pipedrive';
 
 describe('GetDeal', () => {
   it('should be able to get Pipedrive response error', async () => {
-    const id = faker.datatype.number();
+    const id = faker.number.int();
 
     axios
       .setBaseUrl(pipedriveApiUrl)

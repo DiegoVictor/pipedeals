@@ -35,13 +35,9 @@ describe('basicAuth', () => {
   it('should not be able to request with a invalid token', async () => {
     const req = {
       headers: {
-        authorization: `Bearer ${jwt.sign(
-          { id: faker.datatype.number() },
-          '7d',
-          {
-            expiresIn: '-1d',
-          }
-        )}`,
+        authorization: `Bearer ${jwt.sign({ id: faker.number.int() }, '7d', {
+          expiresIn: '-1d',
+        })}`,
       },
     };
 

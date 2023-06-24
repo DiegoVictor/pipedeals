@@ -33,8 +33,8 @@ describe('bearerAuth', () => {
     const req = {
       headers: {
         authorization: `Bearer ${jwt.sign(
-          { id: faker.datatype.number() },
-          faker.random.alphaNumeric(29),
+          { id: faker.number.int() },
+          faker.string.alphanumeric(29),
           {
             expiresIn: '-1d',
           }

@@ -11,8 +11,8 @@ import { axios } from '../../../mocks/axios';
 import { pipedriveApiUrl } from '../../../src/config/pipedrive';
 
 describe('PipedriveEvent', () => {
-  const paymentMethod = faker.random.word();
-  const paymentMethodId = faker.datatype.number();
+  const paymentMethod = faker.lorem.word();
+  const paymentMethodId = faker.number.int();
 
   beforeEach(async () => {
     await Report.deleteMany();

@@ -9,13 +9,13 @@ factory.define(
   'Deal',
   {},
   {
-    id: faker.datatype.number,
-    parcels: () => faker.datatype.number({ min: 2, max: 5 }),
-    supplier: faker.company.companyName,
-    payment_method: faker.random.word,
-    person_id: {
-      name: faker.name.findName,
-    },
+    id: faker.number.int,
+    parcels: () => faker.number.int({ min: 2, max: 5 }),
+    supplier: faker.company.name,
+    payment_method: faker.lorem.word,
+    person_id: () => ({
+      name: faker.person.firstName(),
+    }),
   }
 );
 
@@ -27,8 +27,8 @@ factory.define(
       formaspagamento: [
         {
           formapagamento: {
-            id: faker.datatype.number,
-            codigoFiscal: faker.helpers.arrayElement([15, 3, 1]),
+            id: faker.number.int,
+            codigoFiscal: () => faker.helpers.arrayElement([15, 3, 1]),
           },
         },
       ],
@@ -41,27 +41,27 @@ factory.define(
   {},
   {
     name: faker.commerce.productName,
-    quantity: () => faker.datatype.number({ min: 2, max: 5 }),
+    quantity: () => faker.number.int({ min: 2, max: 5 }),
     item_price: () =>
       Number(Math.floor(faker.finance.amount()) + Math.random()).toFixed(2),
   }
 );
 
 factory.define('Opportunity', Opportunity, () => {
-  const quantity = faker.datatype.number({ min: 2, max: 5 });
+  const quantity = faker.number.int({ min: 2, max: 5 });
   const unitary_value = faker.finance.amount();
 
   return {
     client: {
-      pipedrive_id: faker.datatype.number,
-      name: faker.name.findName,
+      pipedrive_id: faker.number.int(),
+      name: faker.person.firstName(),
     },
     supplier: {
-      name: faker.company.companyName,
+      name: faker.company.name(),
     },
     items: [
       {
-        description: faker.commerce.productName,
+        description: faker.commerce.productName(),
         quantity,
         unitary_value,
       },
@@ -69,12 +69,12 @@ factory.define('Opportunity', Opportunity, () => {
     parcels: [
       {
         payment_term_in_days: 30,
-        value: faker.finance.amount,
+        value: faker.finance.amount(),
       },
     ],
-    payment_method: faker.random.word,
+    payment_method: faker.lorem.word(),
     amount: quantity * unitary_value,
-    createdAt: faker.date.past,
+    createdAt: faker.date.past(),
   };
 });
 

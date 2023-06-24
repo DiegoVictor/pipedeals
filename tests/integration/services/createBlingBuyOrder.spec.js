@@ -8,9 +8,9 @@ import { axios } from '../../../mocks/axios';
 describe('CreateBlingBuyOrder', () => {
   it('should be able to get create a new opportunity with new payment method', async () => {
     const opportunity = await factory.attrs('Opportunity');
-    const id = faker.datatype.number();
+    const id = faker.number.int();
 
-    process.env.BLING_API_KEY = faker.random.alphaNumeric(16);
+    process.env.BLING_API_KEY = faker.string.alphanumeric(16);
 
     axios
       .onGet('/formaspagamento/json')
@@ -19,8 +19,8 @@ describe('CreateBlingBuyOrder', () => {
           formaspagamento: [
             {
               formapagamento: {
-                id: faker.datatype.number(),
-                descricao: faker.random.word(),
+                id: faker.number.int(),
+                descricao: faker.lorem.word(),
               },
             },
           ],
