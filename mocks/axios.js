@@ -12,8 +12,8 @@ function Unauthorized(statusText) {
   };
 }
 
-const verb = (path, data) => {
-  return new Promise(resolve => {
+const verb = (path, data) =>
+  new Promise((resolve) => {
     const reply = axios.replies[path.replace(axios.base_url, '')];
 
     switch (reply.code) {
@@ -27,24 +27,21 @@ const verb = (path, data) => {
     }
     resolve(reply);
   });
-};
 
-const listener = path => {
-  return {
-    reply: (code, data) => {
-      const reply = {
-        code,
-      };
+const listener = (path) => ({
+  reply: (code, data) => {
+    const reply = {
+      code,
+    };
 
-      if (data) {
-        reply.data = data;
-      }
+    if (data) {
+      reply.data = data;
+    }
 
-      axios.replies[path] = reply;
-      return axios;
-    },
-  };
-};
+    axios.replies[path] = reply;
+    return axios;
+  },
+});
 
 axios.get = jest.fn(verb);
 axios.post = jest.fn(verb);
@@ -52,7 +49,7 @@ axios.post = jest.fn(verb);
 axios.onGet = listener;
 axios.onPost = listener;
 
-axios.setBaseUrl = url => {
+axios.setBaseUrl = (url) => {
   axios.base_url = url;
   return axios;
 };
