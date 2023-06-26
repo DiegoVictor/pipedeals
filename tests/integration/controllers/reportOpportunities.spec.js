@@ -141,7 +141,7 @@ describe('ReportOpportunities', () => {
     const { _id: user_id } = await factory.create('User');
     const token = jwtoken(user_id);
 
-    await report.remove();
+    await Report.findOneAndDelete(report._id);
 
     const response = await request(app)
       .get(`/v1/reports/${report._id}/opportunities`)
@@ -210,7 +210,7 @@ describe('ReportOpportunities', () => {
     const { _id: user_id } = await factory.create('User');
     const token = jwtoken(user_id);
 
-    await opportunity.remove();
+    await Opportunity.findOneAndDelete(opportunity._id);
 
     const response = await request(app)
       .get(`/v1/reports/${report_id}/opportunities/${opportunity._id}`)

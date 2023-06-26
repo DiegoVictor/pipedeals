@@ -74,11 +74,11 @@ describe('Report', () => {
   });
 
   it('should not be able to get a report that not exists', async () => {
-    const report = await factory.create('Report');
+    const report = (await factory.create) < Report > 'Report';
     const { _id: user_id } = await factory.create('User');
     const token = jwtoken(user_id);
 
-    await report.remove();
+    await Report.findOneAndDelete(report._id);
 
     const response = await request(app)
       .get(`/v1/reports/${report._id}`)
