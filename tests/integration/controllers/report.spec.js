@@ -74,7 +74,7 @@ describe('Report', () => {
   });
 
   it('should not be able to get a report that not exists', async () => {
-    const report = (await factory.create) < Report > 'Report';
+    const report = await factory.create('Report');
     const { _id: user_id } = await factory.create('User');
     const token = jwtoken(user_id);
 
