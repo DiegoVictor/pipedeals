@@ -4,7 +4,9 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb-base", "prettier"],
+  "extends": [
+    "prettier"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -15,7 +17,9 @@
     "sourceType": "module",
     "requireConfigFile": false
   },
-  "plugins": ["prettier"],
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
     "import/prefer-default-export": "off",
     "prettier/prettier": "error",
